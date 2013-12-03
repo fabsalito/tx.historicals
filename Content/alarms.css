@@ -1,0 +1,57 @@
+﻿.SinBorde
+{
+    border: 0px;
+}
+.Contenido
+{
+    margin: 30px;
+}
+.BarraBreadcumb
+{
+    width: 100%;
+    font: 16px sans-serif;
+	color: #333;
+	background-color: #ECECEC;
+	font-weight: bold;
+	height: 35px;
+	padding-left: 20px;
+	padding-top: 15px;
+}
+.BarraFiltros
+{
+    width: 100%;
+    font: 14px;
+	color: #FFF;
+	background-color: #999;
+	font-weight: bold;
+	text-align: center;
+}
+.BarraBotones
+{
+    border-bottom-style: none;
+    text-align: right;
+    width: auto;
+    vertical-align: middle;
+    padding: 0px 0px 0px 150px;
+}
+.Filtros 
+{
+    border-style: none;
+    padding: 5px;
+    vertical-align: top;
+}
+
+.ui-state-active
+{
+    border: 1px solid #fbd850; 
+    background: none !important; 
+    background-color: #DDAA44 !important;
+    font-weight: bold; 
+    color: #eb8f00;
+}
+
+.ImageCheckbox
+{
+    padding-bottom: 6px;
+    margin-left: -10px;
+}

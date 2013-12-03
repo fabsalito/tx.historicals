@@ -1,0 +1,474 @@
+﻿@model sga.ViewModels.HistoricoAlarmasViewModel
+
+@{
+    ViewBag.Title = "Histórico de alarmas";
+    ViewBag.TitleToolbar = "Filtros para alarmas";
+    ViewBag.Linea = "Tandem";
+}
+
+@section Styles{
+<link href="@Url.Content("~/Content/jquery.dataTables/css/jquery.dataTablesTernium.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/jquery.dataTables/css/jquery.dataTables_themerollerTernium.css")" rel="stylesheet" type="text/css" />
+}
+
+@section Breadcrumb{
+Histórico de alarmas - @ViewBag.Linea
+}
+
+@section Toolbar{
+<table>
+    <tr>
+        <td>
+            <span class="titulo">Descripción</span><br />
+            <input id="txtFiltroDescripcion" class="txtStd txtMediano" type="text" value="" />
+        </td>
+
+        <td>
+            <span class="titulo">Sistema</span><br />
+            <select id="ddlFiltroSistema" class="cmbStd cmbMediano inputContenido inputFocus" >
+                <option value="-1">Todos</option>
+                @{
+                    foreach (var item in @Model.sistemas)
+                    {
+                        <option value="@item.idPlc">@item.description</option>
+                    }
+                }
+            </select>
+        </td>
+
+        <td>
+            <span class="titulo">Dirección</span><br />
+            <input id="txtFiltroDireccion" type="text" class="txtStd txtMediano" value="" />
+        </td>
+
+        <td>
+            <span class="titulo">Código</span><br />
+            <input id="txtFiltroCodigo" type="text" class="txtStd txtMediano" value="" />
+        </td>
+
+        <td>
+            <span class="titulo">Nodo</span><br />
+            <select id="ddlFiltroNodo" class="cmbStd cmbMediano inputContenido inputFocus" >
+                <option value="-1">Todos</option>
+                @{
+                    foreach (var item in @Model.nodos)
+                    {
+                        <option value="@item.idNode">@item.description</option>
+                    }
+                }
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <span class="titulo">Periodo de visualización</span><br />
+            Desde
+            <input type="text" id="txtFiltroDiaInicio" name="txtFiltroDiaInicio" class="txtStd" value="" style="width: 125px;" />
+            Hasta
+            <input type="text" id="txtFiltroDiaFin" name="txtFiltroDiaFin" class="txtStd" value="" style="width: 125px;" />
+        </td>
+
+        <td>
+            <span class="titulo">Estados</span><br />
+            <div class="divCol">
+                <input type="checkbox" id="estadosChckBx1" name="estadosChckBx1" checked="checked"/><img alt="" class="ImageCheckbox" title="Ausentes no reconocidas" src="@Url.Content("~/Content/images/estados/est_rojo_m.gif")" />
+            </div>
+            <div class="divCol">
+                <input type="checkbox" id="estadosChckBx2" name="estadosChckBx2"/><img alt="" class="ImageCheckbox" title="Presentes no reconocidas" src="@Url.Content("~/Content/images/estados/est_azul_m.gif")" />
+            </div>
+            <div class="divCol">
+                <input type="checkbox" id="estadosChckBx3" name="estadosChckBx3"/><img alt="" class="ImageCheckbox" title="Presentes reconocidas" src="@Url.Content("~/Content/images/estados/est_verde_m.gif")" />
+            </div>
+        </td>
+
+        <td colspan="2">
+            <span class="titulo">Eventos</span><br />
+            <input type="checkbox" id="eventosChckBx1" name="eventosChckBx1"/>
+        </td>
+    </tr>
+</table>
+}
+
+@section ToolbarButtonRight{
+<input id="btnFiltroAlarmas" class="botonFiltro botonPrincipal" type="button" value="Filtrar" onclick="FiltrarHistoricoAlarmas();" />
+}
+
+@section Content{
+
+<div>
+    <table id="historical">
+        <thead>
+            <tr>
+                <th>EST.</th>
+                <th>DESCRIPCIÓN</th>
+                <th>T. ON</th>
+                <th>T. OFF</th>
+
+                <th>T. ACEPTA</th>
+                <th>T. RESET</th>
+                <th>T. CUA.</th>
+
+                <th>CAUSA</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+			    <td colspan="7" ></td>
+		    </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div id="divHiddens">
+    <input id="hidIdLinea" value="1551001" type="hidden" />
+    <input id="hidFiltroDescripcion" type="hidden" />
+    <input id="hidFiltroSistema" type="hidden" />
+    <input id="hidFiltroNode" type="hidden" />
+    <input id="hidFiltroDireccion" type="hidden" />
+    <input id="hidFiltroCodigo" type="hidden" />
+    <input id="hidFiltroDiaInicio" type="hidden" />
+    <input id="hidFiltroDiaFin" type="hidden" />
+    <input id="hidEstadosChckBx1" type="hidden" />
+    <input id="hidEstadosChckBx2" type="hidden" />
+    <input id="hidEstadosChckBx3" type="hidden" />
+    <input id="hidEventosChckBx1" type="hidden" />
+
+    <input id="hidUrlAlarmInfo" type="hidden" value="@Url.Action("VerAlarmInfo", "Home")" />
+</div>
+
+<div id="divDialogAlarmInfo" title="Información de alarma" class="dialogGeneral">
+
+</div>
+}
+
+@section Scripts{
+<script src="@Url.Content("~/Scripts/jquery.dataTables/jquery.dataTablesTernium.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/AlarmsHistorical/AlarmsHistorical.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.datatimepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //var today = new Date();
+        var date = new Date();
+
+        // modifica funcionamiento de recarga por ajax
+        $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
+            if (sNewSource !== undefined && sNewSource !== null) {
+                oSettings.sAjaxSource = sNewSource;
+            }
+
+            // Server-side processing should just call fnDraw
+            if (oSettings.oFeatures.bServerSide) {
+                this.fnDraw();
+                return;
+            }
+
+            this.oApi._fnProcessingDisplay(oSettings, true);
+            var that = this;
+            var iStart = oSettings._iDisplayStart;
+            var aData = [];
+
+            this.oApi._fnServerParams(oSettings, aData);
+
+            oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function (json) {
+                /* Clear the old information from the table */
+                that.oApi._fnClearTable(oSettings);
+
+                /* Got the data - add it to the table */
+                var aData = (oSettings.sAjaxDataProp !== "") ?
+            that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
+
+                for (var i = 0; i < aData.length; i++) {
+                    that.oApi._fnAddData(oSettings, aData[i]);
+                }
+
+                oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+
+                that.fnDraw();
+
+                if (bStandingRedraw === true) {
+                    oSettings._iDisplayStart = iStart;
+                    that.oApi._fnCalculateEnd(oSettings);
+                    that.fnDraw(false);
+                }
+
+                that.oApi._fnProcessingDisplay(oSettings, false);
+
+                /* Callback user function - for event handlers etc */
+                if (typeof fnCallback == 'function' && fnCallback !== null) {
+                    fnCallback(oSettings);
+                }
+            }, oSettings);
+        };
+
+        // cambia el funcionamiento de la búsqueda rápida para que tenga delay
+        $.fn.dataTableExt.oApi.fnSetFilteringDelay = function (oSettings, iDelay) {
+            var _that = this;
+
+            if (iDelay === undefined) {
+                iDelay = 250;
+            }
+
+            this.each(function (i) {
+                $.fn.dataTableExt.iApiIndex = i;
+                var 
+                    $this = this,
+                    oTimerId = null,
+                    sPreviousSearch = null,
+                    anControl = $('input', _that.fnSettings().aanFeatures.f);
+
+                anControl.unbind('keyup').bind('keyup', function () {
+                    var $$this = $this;
+
+                    if (sPreviousSearch === null || sPreviousSearch != anControl.val()) {
+                        window.clearTimeout(oTimerId);
+                        sPreviousSearch = anControl.val();
+                        oTimerId = window.setTimeout(function () {
+                            $.fn.dataTableExt.iApiIndex = i;
+                            _that.fnFilter(anControl.val());
+                        }, iDelay);
+                    }
+                });
+
+                return this;
+            });
+            return this;
+        };
+
+        // solo lectura para los selectores de fecha
+        $('#txtFiltroDiaInicio').attr('readonly', true);
+        $('#txtFiltroDiaFin').attr('readonly', true);
+
+        $('#txtFiltroDiaFin').datetimepicker({
+            dateFormat: 'dd/mm/yy',
+            timeFormat: 'HH:mm:ss',
+            showOn: 'button',
+            buttonImage: '@Url.Content("~/Content/calendar/images/calendar.png")',
+            buttonImageOnly: true,
+            onClose: function (dateText, inst) {
+                if ($('#txtFiltroDiaInicio').val() !== '') {
+                    var testStartDate = $('#txtFiltroDiaInicio').datetimepicker('getDate');
+                    var testEndDate = $('#txtFiltroDiaFin').datetimepicker('getDate');
+                    if (testStartDate > testEndDate) {
+                        $('#txtFiltroDiaInicio').datetimepicker('setDate', testEndDate);
+                    }
+                }
+                else {
+                    $('#txtFiltroDiaInicio').val(dateText);
+                }
+            },
+            onSelect: function (selectedDateTime) {
+                $('#txtFiltroDiaInicio').datetimepicker('option', 'maxDate', $('#txtFiltroDiaFin').datetimepicker('getDate'));
+            }
+        });
+
+        $('#txtFiltroDiaFin').datetimepicker('setDate', date);
+
+        $('#txtFiltroDiaInicio').datetimepicker({
+            dateFormat: 'dd/mm/yy',
+            timeFormat: 'HH:mm:ss',
+            showOn: 'button',
+            buttonImage: '@Url.Content("~/Content/calendar/images/calendar.png")',
+            buttonImageOnly: true,
+            onClose: function (dateText, inst) {
+                if ($('#txtFiltroDiaFin').val() !== '') {
+                    var testStartDate = $('#txtFiltroDiaInicio').datetimepicker('getDate');
+                    var testEndDate = $('#txtFiltroDiaFin').datetimepicker('getDate');
+                    if (testStartDate > testEndDate) {
+                        $('#txtFiltroDiaFin').datetimepicker('setDate', testStartDate);
+                    }
+                }
+                else {
+                    $('#txtFiltroDiaFin').val(dateText);
+                }
+            },
+            onSelect: function (selectedDateTime) {
+                $('#txtFiltroDiaFin').datetimepicker('option', 'minDate', $('#txtFiltroDiaInicio').datetimepicker('getDate'));
+            }
+        });
+        $('#txtFiltroDiaInicio').datetimepicker('setDate', new Date(date.setMinutes(date.getMinutes() - 300)));
+
+        // actualiza filtros
+        ActualizaFiltroContainers();
+
+        // implementa dataTable
+        $('#historical').dataTable({
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": '@Url.Action("List", "Home")',
+            "bJQueryUI": false,
+            "iDelay": 300,
+            "bDeferRender": true,
+            "bScrollInfinite": true,
+            "bScrollCollapse": true,
+            "iDisplayLength": 25,
+            "bLengthChange": false,
+            "aaSorting": [[2, 'desc']],
+            "aoColumns": [
+                { "bSearchable": false, "sWidth": "5%" },
+                { "sWidth": "25%" },
+                { "sWidth": "14%" },
+                { "sWidth": "14%" },
+                { "sWidth": "14%" },
+                { "sWidth": "14%" },
+                { "sWidth": "14%" },
+                { "bSearchable": false, "bVisible": false },
+                { "bSearchable": false, "bVisible": false },
+                { "bSearchable": false, "bVisible": false },
+                { "bSearchable": false, "bVisible": false }
+            ],
+            "aoColumnDefs": [
+                { "bSearchable": false, "aTargets": [8] },
+                { "bVisible": false, "aTargets": [8] }
+            ],
+            "oLanguage": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            "fnServerParams": function (aoData) {
+                aoData.push({ "name": "cusIdLinea", "value": $("#hidIdLinea").val() },
+                            { "name": "cusDescription", "value": $("#hidFiltroDescripcion").val() },
+                            { "name": "cusDireccion", "value": $("#hidFiltroDireccion").val() },
+                            { "name": "cusSistema", "value": $("#hidFiltroSistema").val() },
+                            { "name": "cusNode", "value": $("#hidFiltroNode").val() },
+                            { "name": "cusInicio", "value": $("#hidFiltroDiaInicio").val() },
+                            { "name": "cusFin", "value": $("#hidFiltroDiaFin").val() },
+                            { "name": "cusCodigo", "value": $("#hidFiltroCodigo").val() },
+                            { "name": "cusShowEvents", "value": $("#hidEventosChckBx1").val() },
+                            { "name": "cusShowAusNoRec", "value": $("#hidEstadosChckBx1").val() },
+                            { "name": "cusShowPreNoRec", "value": $("#hidEstadosChckBx2").val() },
+                            { "name": "cusShowPreRec", "value": $("#hidEstadosChckBx3").val() });
+            },
+            "sScrollY": $('.content-header').height(),
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                // verifica si tiene que recortar texto y aplicar tooltip
+                if ($('td:eq(1)', nRow).text().length > 35) {
+                    // define title para tooltip
+                    $('td:eq(1)', nRow).attr('title', aData[1]);
+                    $('td:eq(1)', nRow).attr('class', 'Tooltip');
+
+                    // recorta el texto
+                    $('td:eq(1)', nRow).text($('td:eq(1)', nRow).text().substr(0, 35) + '...');
+
+                    // define tooltip para la fila
+                    $('td:eq(1)', nRow).tooltip({
+                        show: {
+                            effect: "slideDown",
+                            delay: 250
+                        },
+                        hide: {
+                            effect: "explode",
+                            delay: 250
+                        },
+                        position: {
+                            my: "left-50 center",
+                            at: "right center"
+                        }
+                    });
+                }
+
+                // imagen para ausentes no reconocidas
+                if ("" != aData[2] && "" != aData[3] && "" == aData[4]) {
+                    $('td:eq(0)', nRow).html('<img src="@Url.Content("~/Content/images/estados/est_rojo_m.gif")" />');
+                }
+
+                // imagen para presentes no reconocidas
+                if ("" != aData[2] && "" == aData[3] && "" == aData[4]) {
+                    $('td:eq(0)', nRow).html('<img src="@Url.Content("~/Content/images/estados/est_azul_m.gif")" />');
+                }
+
+                // imagen para persentes reconocidas
+                if ("" != aData[2] && "" == aData[3] && "" != aData[4]) {
+                    $('td:eq(0)', nRow).html('<img src="@Url.Content("~/Content/images/estados/est_verde_m.gif")" />');
+                }
+
+                console.log(aData[9]);
+                console.log(aData[10]);
+                console.log(aData[11]);
+
+                // asigna llamada al diálogo
+                $('td:eq(0)', nRow).on('click', function () {
+                    VerAlarmInfo("'" + aData[9] + "'", aData[10], aData[11]);
+                });
+            },
+            "fnDrawCallback": function (oSettings) {
+                dataTableRezize();
+            }
+        });
+
+        // aplica mejoras en la respuesta del filtro rapido
+        $('#historical').dataTable().fnSetFilteringDelay();
+
+        // aplica switch on-off al checkbox de eventos
+        $('#eventosChckBx1').iphoneStyle({
+            checkedLabel: 'SI',
+            uncheckedLabel: 'NO'
+        });
+
+        // aplica cool checkbox style a estados
+        $('input#estadosChckBx1').prettyCheckable({
+            color: "gray"
+        });
+        $('input#estadosChckBx2').prettyCheckable({
+            color: "gray"
+        });
+        $('input#estadosChckBx3').prettyCheckable({
+            color: "gray"
+        });
+
+        // implementa plugin tooltip
+        $('.ImageCheckbox').tooltip({
+            show: {
+                effect: "slideDown",
+                delay: 250
+            },
+            hide: {
+                effect: "explode",
+                delay: 250
+            },
+            position: {
+                my: "left-50 bottom+20",
+                at: "right bottom+20"
+            }
+        });
+
+        // define dialogo para info de alarma
+        $("#divDialogAlarmInfo").dialog({
+            autoOpen: false,
+            width: "50%",
+            modal: true,
+            height: "auto",
+            resizable: false,
+            show: "slow"
+        });
+
+        // implementa autocomplete para descripción
+        //$("#txtFiltroDireccion").autocomplete({
+        //    source: "@Url.Action("DireccionAutocomplete", "Home")"
+        //});
+    });
+</script>
+}

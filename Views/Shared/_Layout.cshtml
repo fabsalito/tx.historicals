@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Include global styles -->
+    <link href="@Url.Content("~/Content/jquery-ui/jquery-ui-1.9.2.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/jquert.iphone-style-checkboxes/style.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/jquery.pretty-checkable/prettyCheckable.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Estandar/layout.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Estandar/estandar.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Estandar/dd.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Estandar/calendario.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Estandar/fixedTable.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/alarms.css")" rel="stylesheet" type="text/css" />
+    <!-- Include styles needed for other pages -->
+    @RenderSection("Styles", false)
+  </head>
+  <body>
+    <div class="content-header" >
+        <div id="divBreadcrumb">
+            <span id="spaBreadcrumb">
+                @RenderSection("Breadcrumb", true)
+            </span>
+        </div>
+        <div id="divToolbarContainer">
+            <div class="contenedorGeneralFiltro">
+                <div class="contenedorFiltroColapsable">
+                    <span>@ViewBag.TitleToolbar</span>
+                </div>
+
+                <div class="contenidoFiltros">
+                    <div>
+                        <div id="divToolbar">
+                            @RenderSection("Toolbar", true)
+                        </div>
+                        <div id="divToolbarButtonRight">
+                            @RenderSection("ToolbarButtonRight", false)
+                        </div>
+                    </div>
+                    <div id="divToolbarButtonBottom">
+                        @RenderSection("ToolbarButtonBottom", false)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-main">
+        @RenderSection("Content", true)
+    </div>
+
+    <!-- Include global scripts -->
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.9.2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquert.iphone-style-checkboxes/iphone-style-checkboxes.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.pretty-checkable/prettyCheckable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Estandar/estandar.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Estandar/calendar.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/Estandar/jquery.dd.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/JsonAsynchronousCallback.js")" type="text/javascript"></script>
+    @*<script src="@Url.Content("~/Scripts/json2.js")" type="text/javascript"></script>*@
+    <!-- Include scripts needed for other pages -->
+    @RenderSection("Scripts", false)
+  </body>
+</html>
+
+

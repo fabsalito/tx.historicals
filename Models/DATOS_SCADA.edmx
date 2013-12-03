@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DATOS_SCADAModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DATOS_SCADAModelStoreContainer" />
+        <Function Name="usp_web_llenar_combo_nodos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_web_llenar_combo_sistemas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_web_obtener_codigo_alarmas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_web_obtener_descripcion_alarmas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+          <Parameter Name="term" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_web_obtener_direccion_alarmas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+          <Parameter Name="term" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_web_obtener_historico_alarmas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+          <Parameter Name="id_sistema" Type="int" Mode="In" />
+          <Parameter Name="id_node" Type="varchar" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
+          <Parameter Name="address" Type="varchar" Mode="In" />
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="fechaInicio" Type="datetime" Mode="In" />
+          <Parameter Name="fechaFin" Type="datetime" Mode="In" />
+          <Parameter Name="view_events" Type="bit" Mode="In" />
+          <Parameter Name="view_prenorec" Type="bit" Mode="In" />
+          <Parameter Name="view_prerec" Type="bit" Mode="In" />
+          <Parameter Name="view_ausnorec" Type="bit" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DATOS_SCADAModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DATOS_SCADAEntities1" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="llenar_combo_sistemas" ReturnType="Collection(DATOS_SCADAModel.llenar_combo_sistemas_Result)">
+          <Parameter Name="id_line" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="obtener_codigo_alarmas" ReturnType="Collection(DATOS_SCADAModel.obtener_codigo_alarmas_Result)">
+          <Parameter Name="id_line" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="obtener_descripcion_alarmas" ReturnType="Collection(DATOS_SCADAModel.obtener_descripcion_alarmas_Result)">
+            <Parameter Name="id_line" Mode="In" Type="Int32" />
+            <Parameter Name="term" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="obtener_direccion_alarmas" ReturnType="Collection(DATOS_SCADAModel.obtener_direccion_alarmas_Result)">
+            <Parameter Name="id_line" Mode="In" Type="Int32" />
+            <Parameter Name="term" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="llenar_combo_nodos" ReturnType="Collection(DATOS_SCADAModel.llenar_combo_nodos_Result)">
+          <Parameter Name="id_line" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="obtener_historico_alarmas" ReturnType="Collection(DATOS_SCADAModel.obtener_historico_alarmas_Result)">
+            <Parameter Name="id_line" Mode="In" Type="Int32" />
+            <Parameter Name="id_sistema" Mode="In" Type="Int32" />
+            <Parameter Name="id_node" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="view_events" Mode="In" Type="Boolean" />
+            <Parameter Name="view_prenorec" Mode="In" Type="Boolean" />
+            <Parameter Name="view_prerec" Mode="In" Type="Boolean" />
+            <Parameter Name="view_ausnorec" Mode="In" Type="Boolean" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="llenar_combo_sistemas_Result">
+          <Property Type="Int32" Name="idPlc" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="obtener_codigo_alarmas_Result">
+          <Property Type="String" Name="alarm" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="obtener_descripcion_alarmas_Result">
+          <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="obtener_direccion_alarmas_Result">
+          <Property Type="String" Name="address" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="llenar_combo_nodos_Result">
+          <Property Type="String" Name="idNode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="obtener_historico_alarmas_Result" >
+          <Property Type="String" Name="estado" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="false" />
+          <Property Type="String" Name="timeOn" Nullable="false" />
+          <Property Type="String" Name="timeOff" Nullable="false" />
+          <Property Type="String" Name="timeAcknowledge" Nullable="false" />
+          <Property Type="String" Name="timeReset" Nullable="false" />
+          <Property Type="String" Name="timeQuarantine" Nullable="false" />
+          <Property Type="String" Name="event" Nullable="false" />
+          <Property Type="String" Name="eventDescription" Nullable="false" />
+          <Property Type="String" Name="node" Nullable="false" />
+          <Property Type="Int32" Name="idAlarm" Nullable="false" />
+          <Property Type="Int64" Name="timeStampOn" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DATOS_SCADAModelStoreContainer" CdmEntityContainer="DATOS_SCADAEntities1" >
+          <FunctionImportMapping FunctionImportName="llenar_combo_sistemas" FunctionName="DATOS_SCADAModel.Store.usp_web_llenar_combo_sistemas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.llenar_combo_sistemas_Result">
+                <ScalarProperty Name="idPlc" ColumnName="idPlc" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="obtener_codigo_alarmas" FunctionName="DATOS_SCADAModel.Store.usp_web_obtener_codigo_alarmas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.obtener_codigo_alarmas_Result">
+                <ScalarProperty Name="alarm" ColumnName="alarm" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="obtener_descripcion_alarmas" FunctionName="DATOS_SCADAModel.Store.usp_web_obtener_descripcion_alarmas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.obtener_descripcion_alarmas_Result">
+                <ScalarProperty Name="description" ColumnName="description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="obtener_direccion_alarmas" FunctionName="DATOS_SCADAModel.Store.usp_web_obtener_direccion_alarmas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.obtener_direccion_alarmas_Result">
+                <ScalarProperty Name="address" ColumnName="address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="llenar_combo_nodos" FunctionName="DATOS_SCADAModel.Store.usp_web_llenar_combo_nodos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.llenar_combo_nodos_Result">
+                <ScalarProperty Name="idNode" ColumnName="idNode" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="obtener_historico_alarmas" FunctionName="DATOS_SCADAModel.Store.usp_web_obtener_historico_alarmas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.obtener_historico_alarmas_Result">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="timeOn" ColumnName="timeOn" />
+                <ScalarProperty Name="timeOff" ColumnName="timeOff" />
+                <ScalarProperty Name="timeAcknowledge" ColumnName="timeAcknowledge" />
+                <ScalarProperty Name="timeReset" ColumnName="timeReset" />
+                <ScalarProperty Name="timeQuarantine" ColumnName="timeQuarantine" />
+                <ScalarProperty Name="event" ColumnName="event" />
+                <ScalarProperty Name="eventDescription" ColumnName="eventDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="DATOS_SCADA" />
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

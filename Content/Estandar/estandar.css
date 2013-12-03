@@ -1,0 +1,546 @@
+html, body {
+	margin: 0;
+	padding: 2px;
+	/*border: 0;
+	outline: 0;
+	font-weight:normal;
+	height: 100%;*/
+}
+
+body{
+	font-family: Verdana;
+	font-size:11px;
+	color: #000000;
+	height: 100%;
+}
+
+a{
+	text-decoration:none;
+	color:#666666;
+}
+
+a:hover{
+	text-decoration:underline;
+	color:#666666;
+}
+
+#contenedorPagina{
+	width:990px;
+	height:100%;
+	margin:0 auto;
+}
+
+.tituloPagina{
+	font-family:Verdana;
+	font-size:18px;
+	font-weight:bold;
+	text-shadow: #FF9900 0px 0px 8px;
+	border-bottom:#DD4F22 solid 2px;
+	color:#FF9900;
+	padding:5px 0px;
+	margin:10px 0px;
+}
+
+.contenedorGeneralFiltro{
+	/*width:100%;*/
+	border:#333333 solid 2px;
+	border-radius:5px 5px 5px 5px;
+	box-shadow:0px 0px 5px #666666;
+	background:url("images/fondoBusquedaAvanzada.png") repeat-x right bottom #EFEFEF;
+}
+
+.contenedorFiltroColapsable{
+	background-color:#333333;
+	color:#FFFFFF;
+	padding:3px 3px 3px 17px;
+	font-weight:bold;
+	font-size:12px;
+	cursor:pointer;
+	text-shadow: #FFFFFF 0px 0px 5px;
+	background-image:url(images/down_back_off.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+	border-bottom:#FF9900 solid 2px;
+	box-shadow:0px 2px 5px #666666;
+}
+
+.contenedorFiltroColapsable:hover{
+	background-image:url(images/down_back_on.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+}
+
+.barraFiltroColapsada{
+	background-image:url(images/down_back_on.png);
+	background-repeat:no-repeat;
+	background-position:0px 0px;
+}
+
+.contenidoFiltros{
+	padding:5px 5px 10px 5px;
+}
+
+.contenidoFiltroCampos{
+	min-width:300px;
+}
+
+.clear{
+	clear:both;
+}
+
+.separadorFila{
+	height:2px;
+	background-color:#B2B2B2;
+	margin:10px 0px;
+	border-radius:5px;
+}
+
+.contenidoPaginacion{
+	/*float:left;*/
+	/*margin:0px 5px 5px 5px; */
+	text-align:center;
+	/*background-color:#333333;*/
+	max-width:510px;
+	width:100%;
+    max-height:65px;
+}
+
+.separadorVerticalBotonera{
+    float:right;
+    height:35px;
+    width:2px;
+    background-color:#B2B2B2;
+    margin: 0px 10px;
+}
+
+.contenidoFiltroBotonera{
+	float:right;
+	margin:0px 5px 0px 5px;
+}
+
+.botonFiltro{
+	font-family:Verdana;
+	border-radius:5px;
+	/*padding-left:10px;*/
+	cursor:pointer;
+	margin:5px 0px;
+	text-align:left;
+	height:30px;
+	box-shadow:0px 0px 2px 0px #FFFFFF inset;
+	font-weight:bold;
+	text-align:center;
+}
+
+.botonPrincipal{
+	background:url(images/fondoBotones.png) repeat-x;
+	/*margin-left:10px;*/
+	width:120px;
+	border:#a53310 1px solid;
+	color:#FFFFFF;
+	text-shadow:1px 1px 1px #000000;
+}
+.botonPrincipal:hover{
+	color:#FFFFFF;
+	background:url(images/fondoBotonesON.png) repeat-x;
+}
+
+.botonSecundario{
+	background:url(images/fondoBotonesSecundarios.png) repeat-x;
+	width:120px;
+	border:#666666 1px solid;
+	color:#FFFFFF;
+	text-shadow:1px 1px 1px #000000;
+}
+.botonSecundario:hover{
+	color:#FFFFFF;
+	background-color:#AAAAAA;
+	background:url(images/fondoBotonesSecundariosON.png) repeat-x;
+}
+.botonDeshabilitado{
+	background:url(images/fondoBotonesDeshabilitados.png) repeat-x;
+	width:120px;
+	border:#939393 1px solid;
+	color:#939393;
+	text-shadow: #FFFFFF 1px 1px 0px; /*Este shadow es para que en Firefox se vea igual que en IE*/
+}
+
+
+.itemFiltro{
+	float:left;
+	padding-right:10px;
+	line-height:20px;
+}
+
+.titulo{
+	font-weight:bold;
+}
+
+.itemFiltro .titulo{
+	/*font-weight:bold;*/
+	font-size:11px;
+}
+
+.cmbConImagen{
+	width:100px;
+}
+
+
+
+
+/****************/
+/**** COMBOS ****/
+/****************/
+.cmbStd{
+	font-family:Verdana;
+	border-radius:5px;
+    border:1px solid #999999;
+    color:#555555;
+    font-size:11px;
+    padding:3px;
+    cursor:pointer;
+    background:url(images/fondo-input.gif) #FFFFFF repeat-x center bottom;
+}
+.cmbLargo{
+	width:250px;
+}
+.cmbMediano{
+	width:180px;
+}
+.cmbCorto{
+	width:120px;
+}
+
+/*****************/
+/**** TEXTBOX ****/
+/*****************/
+.txtStd{
+	font-family:Verdana;
+	border-radius:5px;
+    border:1px solid #999999;
+    color:#555555;
+    font-size:11px;
+    padding:3px;
+    background:url(images/fondo-input.gif) #FFFFFF repeat-x center bottom;
+}
+.txtLargo{
+	width:243px;
+}
+.txtMediano{
+	width:173px;
+}
+.txtCorto{
+	width:113px;
+}
+
+.txtCalendario{
+	background-image:url(images/calendario.png);
+	background-repeat:no-repeat;
+	background-position:3px 3px;
+	padding-left:20px;
+	cursor:pointer;
+	width:90px;
+}
+
+
+.inputFocus{
+    border:#FF9900 solid 1px;
+}
+
+.inputContenido{
+	font-weight:bold;
+	background:#f4edd5;
+}
+
+
+/******************/
+/**** BOTONERA ****/
+/******************/
+.contenedorBotoneraSinTitulo{
+    width:100%;
+    text-align:center;
+    margin:20px 0px;
+    border-radius:5px;
+    /*box-shadow:0px 0px 5px #666666;*/
+    /*border-bottom:#DD4F22 solid 2px;*/
+    /*border-top:#DD4F22 solid 2px;*/
+}
+.contenedorBotoneraSinTitulo .botonesBotonera{
+    padding-top:0px;
+}
+
+.contenedorBotonera{
+    width:100%;
+    text-align:center;
+    margin:20px 0px;
+    border-radius:5px;
+    box-shadow:0px 0px 5px #666666;
+    border:#DD4F22 solid 1px;
+}
+.tituloBotonera{
+    background:url(images/fondo-titulo-botonera.gif) repeat-x;
+    color:#FFFFFF;
+    font-size:12px;
+    font-weight:bold;
+    border-radius:5px 5px 0px 0px;
+    padding:3px 0px;
+    text-shadow:1px 1px 1px #000000;
+    border-bottom:2px solid #FF9900;
+    box-shadow:0px 1px 5px #666666;
+}
+.botonesBotonera{
+    padding-top:3px;
+}
+.textoEnBotonera{
+    margin:5px 0px;
+}
+
+
+/***********************/
+/**** TABLA GENERAL ****/
+/***********************/
+.tablaGeneral{
+	border:#333333 solid 1px;
+	border-radius:5px 5px 0px 0px;
+}
+
+
+.tablaGeneral tr.encabezado th{
+	background:url(images/fondoGrillaTitulos.png) bottom center #333333 repeat-x;
+	color:#CCCCCC;
+	padding:5px;
+	font-weight:bold;
+	border-left:#5B5B5B solid 1px;
+	font-size:12px;
+	text-shadow: #000000 0px 0px 3px;
+}
+
+.tablaGeneral tr.encabezado{
+	box-shadow:0px 2px 5px #666666;
+}
+
+.tablaGeneral tr td a{
+	color:#333333;
+	text-decoration:underline;
+	text-shadow: #999999 0px 0px 1px;
+	/*text-decoration:underline;*/
+}
+.tablaGeneral tr td a:hover{
+	color:#DD4f22;
+	text-decoration:none;
+	/*text-decoration:underline;*/
+}
+
+.tablaGeneral tr td.filaImpar{
+	background-color:#DDDDDD;
+	border:#666666 solid 1px;
+	padding:5px;
+}
+
+.tablaGeneral tr td.filaPar{
+	border:#666666 solid 1px;
+	padding:5px;
+}
+
+.tablaGeneral tr:hover td{
+    background: #f4edd5;
+}
+
+.muestraOpcionesColumna{
+	cursor:pointer;
+}
+
+.muestraOpcionesColumna:hover{
+	background:url(images/fondoGrillaTitulosON.png) bottom center #333333 repeat-x !important;
+}
+
+.txtFiltrarColumna{
+	width:200px;
+	padding:2px;
+	border-radius:5px;
+	border:#333333 solid 1px;
+	color:#666666;
+	margin-top:5px;
+}
+
+.txtSinInput{
+    padding:0px 7px;
+    border-radius:5px;
+	border:#999999 dashed 1px;
+	background:url(images/fondo-input.gif) #FFFFFF repeat-x center bottom;
+    /*color:#555555;*/
+    font-size:11px;
+    min-height:20px;
+}
+
+
+.divMuestraCantidadRegistros{
+    margin-top:3px;
+}
+
+.columnaFiltrada{
+    color:#FFFFFF !important;
+    text-decoration:underline;
+}
+
+/***************************/
+/**** BARRA DE PROGRESO ****/
+/***************************/
+.contenedorBarraProgreso {
+    /*float:right;*/
+    width:100%;
+}
+#divBarraFondo {
+    background-image: url("images/barra-progreso-fondo.gif");
+    border: 1px solid #5F5F5F;
+    height: 21px;
+    width: 100%;
+    border-radius:5px;
+    box-shadow: 0 0 2px 0 #666666 inset;
+}
+#divBarraProgreso {
+    background-image: url("images/barra-progreso-activo.gif");
+    float: left;
+    height: 17px;
+    text-align: center;
+    min-width:5px;
+    font-weight:bold;
+    padding-top:4px;
+    color:#FFFFFF;
+    border-radius:5px;
+    box-shadow: 0 0 2px 0 #666666 inset;
+    text-shadow:1px 1px 1px #000000;
+}
+
+
+/*******************/
+/**** PAGINADOR ****/
+/*******************/
+.contenedorBarraPaginador {
+    /*background-color:#666666;*/
+    padding:1px;
+    margin:0px auto;
+    margin-top:2px;
+    width:440px;
+    color:#000000;
+    /*border:#DD4F22 solid 2px;*/
+    border-bottom:#DD4F22 solid 2px;
+    border-top:#DD4F22 solid 2px;
+    border-radius:5px;
+    /*box-shadow: 0 0 2px 0 #FF9900;*/
+    /*background:url(images/fondoBotonesDeshabilitados.png) bottom center repeat-x;*/
+}
+.BarraPaginador{
+    margin:3px 15px;
+}
+.contenedorCantidadXPagina{
+    float:left;
+    margin-right:20px;
+}
+.conetenedorPaginas{
+    float:left;
+}
+.contenedorPaginasSelector{
+    float:left;
+    margin:0px 3px;
+}
+.iconitoPaginador{
+    width:20px;
+    height:20px;
+    border:#FFFFFF solid 1px;
+    background-color:#787878;
+    float:left;
+    margin:0px 2px;
+    cursor:pointer;
+    border-radius:5px;
+}
+.iconitoPaginador:hover{
+    border:#FFFFFF solid 1px;
+    background-color:#FF9900;
+}
+
+.qtip-close:hover{
+    background-color:#666666 !important;
+    color:#FFFFFF !important;
+    text-decoration:none !important;
+    border:#666666 solid 1px !important;
+}
+
+.qtip-titlebar{
+    background-image:url(images/fondo-barra-filtro-columna.gif) !important;
+    text-shadow:1px 1px 1px #000000;
+}
+
+.qtip-content{
+    background-image:url(images/fondo-tooltip.gif) !important;
+    background-repeat:repeat-x;
+    background-position:center bottom;
+    border-radius:5px;
+}
+
+.ddTitleText{
+    background:url(images/fondo-input.gif) #FFFFFF repeat-x center bottom !important;
+    border-radius:5px;
+}
+
+.tabs{
+    box-shadow:0px 0px 5px #666666;
+    border:solid 1px #666666;
+}
+
+
+.tooltipIcon{
+    width:13px;
+    height:18px;
+    cursor:pointer;
+    background-image:url(images/lamparita.png);
+    display:inline-block;
+    vertical-align:text-bottom;
+}
+
+.ddcommon .ddTitle .ddTitleText img{
+    height:18px !important;
+}
+
+.ddcommon .ddChild li img{
+    height:18px !important;
+}
+
+
+
+/********************************/
+/**** TABLA GENERAL SIN OVER ****/
+/********************************/
+.tablaGeneralSinOver{
+	border:#333333 solid 1px;
+	border-radius:5px 5px 5px 5px;
+	box-shadow:0px 0px 5px #666666;
+}
+
+
+.tablaGeneralSinOver tr.encabezado th{
+	background:url(images/fondoGrillaTitulos.png) bottom center #333333 repeat-x;
+	color:#CCCCCC;
+	padding:5px;
+	font-weight:bold;
+	border-left:#5B5B5B solid 1px;
+	font-size:12px;
+	text-shadow: #000000 0px 0px 3px;
+	border-bottom: 2px solid #FF9900;
+}
+
+.tablaGeneralSinOver tr.encabezado{
+	box-shadow:0px 2px 5px #666666;
+}
+
+.tablaGeneralSinOver tr td{
+	padding:3px;
+}
+
+/*****************/
+/**** DIALOGS ****/
+/*****************/
+.dialogGeneral{
+    height:auto;
+    padding-top:7px;
+    text-align :center;
+}

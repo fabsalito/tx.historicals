@@ -1,0 +1,81 @@
+﻿@{
+    Layout = "";
+}
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">General</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><label>Fecha de activa. (T. ON): </label></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label>Descripción: </label></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label>Estado: </label></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td><label>Código: </label></td>
+                        <td><label></label></td>
+                        <td><label>Grupo: </label></td>
+                        <td><label></label></td>
+                        <td><label>Prioridad: </label></td>
+                        <td><label></label></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">Mantenimiento</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><label>Alarma IV: </label></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label>Alarma P&I: </label></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><label>Sistema: </label></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td><label>Dirección: </label></td>
+                        <td><label></label></td>
+                        <td><label>Bit: </label></td>
+                        <td><label></label></td>
+                        <td><label>Coil: </label></td>
+                        <td><label></label></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+@ViewBag.idLinea
+@ViewBag.idAlarm
+@ViewBag.node
+@ViewBag.timeStampOn
+
