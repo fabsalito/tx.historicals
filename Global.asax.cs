@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+//using RestApiLib.NogginBox.MvcExtras.Providers;
 
 namespace sga
 {
@@ -21,6 +22,12 @@ namespace sga
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    "AlarmasCantidad",
+            //    "AlarmasCantidad/{inicio}/{fin}/{divisiones}",
+            //    new { controller = "Service", action = "AlarmasCantidad" }
+            //);
+
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
@@ -35,6 +42,13 @@ namespace sga
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            // Source: http://haacked.com/archive/2010/04/15/sending-json-to-an-asp-net-mvc-action-method-argument.aspx 
+            // This must be added to accept JSON as request 
+            //ValueProviderFactories.Factories.Add(new JsonValueProviderFactory()); 
+            // This must be added to accept XML as request 
+            // Source: http://www.nogginbox.co.uk/blog/xml-to-asp.net-mvc-action-method 
+            //ValueProviderFactories.Factories.Add(new XmlValueProviderFactory());
         }
     }
 }

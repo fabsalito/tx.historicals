@@ -37,6 +37,12 @@
           <Parameter Name="view_prerec" Type="bit" Mode="In" />
           <Parameter Name="view_ausnorec" Type="bit" Mode="In" />
         </Function>
+        <Function Name="usp_ws_alarmas_cantidad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+          <Parameter Name="fechaInicio" Type="datetime" Mode="In" />
+          <Parameter Name="fechaFin" Type="datetime" Mode="In" />
+          <Parameter Name="intervalos" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -73,6 +79,12 @@
             <Parameter Name="view_prerec" Mode="In" Type="Boolean" />
             <Parameter Name="view_ausnorec" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="alarmas_cantidad" ReturnType="Collection(DATOS_SCADAModel.alarmas_cantidad_Result)">
+            <Parameter Name="id_line" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="intervalos" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="llenar_combo_sistemas_Result">
           <Property Type="Int32" Name="idPlc" Nullable="false" />
@@ -104,6 +116,11 @@
           <Property Type="String" Name="node" Nullable="false" />
           <Property Type="Int32" Name="idAlarm" Nullable="false" />
           <Property Type="Int64" Name="timeStampOn" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="alarmas_cantidad_Result" >
+          <Property Type="Int64" Name="x" Nullable="false" />
+          <Property Type="Int32" Name="y" Nullable="false" />
+          <Property Type="Int32" Name="z" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -160,6 +177,12 @@
                 <ScalarProperty Name="timeQuarantine" ColumnName="timeQuarantine" />
                 <ScalarProperty Name="event" ColumnName="event" />
                 <ScalarProperty Name="eventDescription" ColumnName="eventDescription" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="alarmas_cantidad" FunctionName="DATOS_SCADAModel.Store.usp_ws_alarmas_cantidad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.alarmas_cantidad_Result">
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

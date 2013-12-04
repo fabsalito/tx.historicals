@@ -321,6 +321,58 @@ namespace sga.Models
     
             return base.ExecuteFunction<obtener_historico_alarmas_Result>("obtener_historico_alarmas", id_lineParameter, id_sistemaParameter, id_nodeParameter, descriptionParameter, addressParameter, codigoParameter, fechaInicioParameter, fechaFinParameter, view_eventsParameter, view_prenorecParameter, view_prerecParameter, view_ausnorecParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="id_line">No Metadata Documentation available.</param>
+        /// <param name="fechaInicio">No Metadata Documentation available.</param>
+        /// <param name="fechaFin">No Metadata Documentation available.</param>
+        /// <param name="intervalos">No Metadata Documentation available.</param>
+        public ObjectResult<alarmas_cantidad_Result> alarmas_cantidad(Nullable<global::System.Int32> id_line, Nullable<global::System.DateTime> fechaInicio, Nullable<global::System.DateTime> fechaFin, Nullable<global::System.Int32> intervalos)
+        {
+            ObjectParameter id_lineParameter;
+            if (id_line.HasValue)
+            {
+                id_lineParameter = new ObjectParameter("id_line", id_line);
+            }
+            else
+            {
+                id_lineParameter = new ObjectParameter("id_line", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter fechaInicioParameter;
+            if (fechaInicio.HasValue)
+            {
+                fechaInicioParameter = new ObjectParameter("fechaInicio", fechaInicio);
+            }
+            else
+            {
+                fechaInicioParameter = new ObjectParameter("fechaInicio", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter fechaFinParameter;
+            if (fechaFin.HasValue)
+            {
+                fechaFinParameter = new ObjectParameter("fechaFin", fechaFin);
+            }
+            else
+            {
+                fechaFinParameter = new ObjectParameter("fechaFin", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter intervalosParameter;
+            if (intervalos.HasValue)
+            {
+                intervalosParameter = new ObjectParameter("intervalos", intervalos);
+            }
+            else
+            {
+                intervalosParameter = new ObjectParameter("intervalos", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<alarmas_cantidad_Result>("alarmas_cantidad", id_lineParameter, fechaInicioParameter, fechaFinParameter, intervalosParameter);
+        }
 
         #endregion
     }
@@ -329,6 +381,109 @@ namespace sga.Models
     #endregion
     
     #region ComplexTypes
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="DATOS_SCADAModel", Name="alarmas_cantidad_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class alarmas_cantidad_Result : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new alarmas_cantidad_Result object.
+        /// </summary>
+        /// <param name="x">Initial value of the x property.</param>
+        /// <param name="y">Initial value of the y property.</param>
+        /// <param name="z">Initial value of the z property.</param>
+        public static alarmas_cantidad_Result Createalarmas_cantidad_Result(global::System.Int64 x, global::System.Int32 y, global::System.Int32 z)
+        {
+            alarmas_cantidad_Result alarmas_cantidad_Result = new alarmas_cantidad_Result();
+            alarmas_cantidad_Result.x = x;
+            alarmas_cantidad_Result.y = y;
+            alarmas_cantidad_Result.z = z;
+            return alarmas_cantidad_Result;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 x
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                OnxChanging(value);
+                ReportPropertyChanging("x");
+                _x = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("x");
+                OnxChanged();
+            }
+        }
+        private global::System.Int64 _x;
+        partial void OnxChanging(global::System.Int64 value);
+        partial void OnxChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                OnyChanging(value);
+                ReportPropertyChanging("y");
+                _y = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("y");
+                OnyChanged();
+            }
+        }
+        private global::System.Int32 _y;
+        partial void OnyChanging(global::System.Int32 value);
+        partial void OnyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                OnzChanging(value);
+                ReportPropertyChanging("z");
+                _z = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("z");
+                OnzChanged();
+            }
+        }
+        private global::System.Int32 _z;
+        partial void OnzChanging(global::System.Int32 value);
+        partial void OnzChanged();
+
+        #endregion
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
