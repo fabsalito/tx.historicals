@@ -44,7 +44,7 @@ namespace sga.Controllers
             DateTime fechaInicio = Convert.ToDateTime(Request.QueryString["cusInicio"]);
             DateTime fechaFin = Convert.ToDateTime(Request.QueryString["cusFin"]);
             string descripcion = Request.QueryString["cusDescription"];
-            string codigo = Request.QueryString["cusCodigo"];
+            int codigo = Convert.ToInt32(Request.QueryString["cusCodigo"]);
             string direccion = Request.QueryString["cusDireccion"];
             int idSistema = Convert.ToInt32(Request.QueryString["cusSistema"]);
             string idNodo = Convert.ToString(Request.QueryString["cusNodo"]);
@@ -117,7 +117,7 @@ namespace sga.Controllers
                 if (Session["sesInicio"].ToString() != fechaInicio.ToString() ||
                     Session["sesFin"].ToString() != fechaFin.ToString() ||
                     Session["sesDescription"].ToString() != descripcion ||
-                    Session["sesCodigo"].ToString() != codigo ||
+                    Convert.ToInt32(Session["sesCodigo"]) != codigo ||
                     Session["sesDireccion"].ToString() != direccion ||
                     Session["sesSistema"].ToString() != idSistema.ToString() ||
                     Session["sesShowEvents"].ToString() != showEvents.ToString() ||

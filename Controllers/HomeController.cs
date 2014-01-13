@@ -52,7 +52,7 @@ namespace sga.Controllers
             DateTime fechaFin = Convert.ToDateTime(Request.QueryString["cusFin"]);
             int idLinea = Convert.ToInt32(Request.QueryString["cusIdLinea"]);
             string descripcion = Request.QueryString["cusDescription"];
-            string codigo = Request.QueryString["cusCodigo"];
+            int codigo = Convert.ToInt32(Request.QueryString["cusCodigo"]);
             string direccion = Request.QueryString["cusDireccion"];
             int idSistema = Convert.ToInt32(Request.QueryString["cusSistema"]);
             string idNodo = Convert.ToString(Request.QueryString["cusNode"]);
@@ -125,7 +125,7 @@ namespace sga.Controllers
                 if (Session["sesInicio"].ToString() != fechaInicio.ToString() ||
                     Session["sesFin"].ToString() != fechaFin.ToString() ||
                     Session["sesDescription"].ToString() != descripcion ||
-                    Session["sesCodigo"].ToString() != codigo ||
+                    Convert.ToInt32(Session["sesCodigo"]) != codigo ||
                     Session["sesDireccion"].ToString() != direccion ||
                     Session["sesSistema"].ToString() != idSistema.ToString() ||
                     Session["sesNode"].ToString() != idNodo.ToString() ||
@@ -207,15 +207,20 @@ namespace sga.Controllers
             return Json(autoCompleteData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult VerAlarmInfo(int? idLinea, string node, int? idAlarm, int? timeStampOn)
+        public ActionResult VerAlarmInfo(int idLinea, int idAlarm, DateTime timeOn)
         {
+            IEnumerable<Models.obtener_info_alarma_Result> alarma;
+            ViewModels.InfoAlarmasViewModel data = new InfoAlarmasViewModel();
+
+            alarma = Object.obtener_info_alarma(idLinea, idAlarm, timeOn).ToList();
+
+            data.alarma = alarma.First();
 
             ViewBag.idLinea = idLinea;
             ViewBag.idAlarm = idAlarm;
-            ViewBag.node = node;
-            ViewBag.timeStampOn = timeStampOn; 
+            ViewBag.timeOn = timeOn;
 
-            return View();
+            return View(data);
         }
     }
 }

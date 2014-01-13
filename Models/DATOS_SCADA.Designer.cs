@@ -186,6 +186,99 @@ namespace sga.Models
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="id_line">No Metadata Documentation available.</param>
+        /// <param name="fechaInicio">No Metadata Documentation available.</param>
+        /// <param name="fechaFin">No Metadata Documentation available.</param>
+        /// <param name="intervalos">No Metadata Documentation available.</param>
+        public ObjectResult<alarmas_cantidad_Result> alarmas_cantidad(Nullable<global::System.Int32> id_line, Nullable<global::System.DateTime> fechaInicio, Nullable<global::System.DateTime> fechaFin, Nullable<global::System.Int32> intervalos)
+        {
+            ObjectParameter id_lineParameter;
+            if (id_line.HasValue)
+            {
+                id_lineParameter = new ObjectParameter("id_line", id_line);
+            }
+            else
+            {
+                id_lineParameter = new ObjectParameter("id_line", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter fechaInicioParameter;
+            if (fechaInicio.HasValue)
+            {
+                fechaInicioParameter = new ObjectParameter("fechaInicio", fechaInicio);
+            }
+            else
+            {
+                fechaInicioParameter = new ObjectParameter("fechaInicio", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter fechaFinParameter;
+            if (fechaFin.HasValue)
+            {
+                fechaFinParameter = new ObjectParameter("fechaFin", fechaFin);
+            }
+            else
+            {
+                fechaFinParameter = new ObjectParameter("fechaFin", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter intervalosParameter;
+            if (intervalos.HasValue)
+            {
+                intervalosParameter = new ObjectParameter("intervalos", intervalos);
+            }
+            else
+            {
+                intervalosParameter = new ObjectParameter("intervalos", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<alarmas_cantidad_Result>("alarmas_cantidad", id_lineParameter, fechaInicioParameter, fechaFinParameter, intervalosParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="id_line">No Metadata Documentation available.</param>
+        /// <param name="id_alarm">No Metadata Documentation available.</param>
+        /// <param name="time_on">No Metadata Documentation available.</param>
+        public ObjectResult<obtener_info_alarma_Result> obtener_info_alarma(Nullable<global::System.Int32> id_line, Nullable<global::System.Int32> id_alarm, Nullable<global::System.DateTime> time_on)
+        {
+            ObjectParameter id_lineParameter;
+            if (id_line.HasValue)
+            {
+                id_lineParameter = new ObjectParameter("id_line", id_line);
+            }
+            else
+            {
+                id_lineParameter = new ObjectParameter("id_line", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter id_alarmParameter;
+            if (id_alarm.HasValue)
+            {
+                id_alarmParameter = new ObjectParameter("id_alarm", id_alarm);
+            }
+            else
+            {
+                id_alarmParameter = new ObjectParameter("id_alarm", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter time_onParameter;
+            if (time_on.HasValue)
+            {
+                time_onParameter = new ObjectParameter("time_on", time_on);
+            }
+            else
+            {
+                time_onParameter = new ObjectParameter("time_on", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction<obtener_info_alarma_Result>("obtener_info_alarma", id_lineParameter, id_alarmParameter, time_onParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="id_line">No Metadata Documentation available.</param>
         /// <param name="id_sistema">No Metadata Documentation available.</param>
         /// <param name="id_node">No Metadata Documentation available.</param>
         /// <param name="description">No Metadata Documentation available.</param>
@@ -197,7 +290,7 @@ namespace sga.Models
         /// <param name="view_prenorec">No Metadata Documentation available.</param>
         /// <param name="view_prerec">No Metadata Documentation available.</param>
         /// <param name="view_ausnorec">No Metadata Documentation available.</param>
-        public ObjectResult<obtener_historico_alarmas_Result> obtener_historico_alarmas(Nullable<global::System.Int32> id_line, Nullable<global::System.Int32> id_sistema, global::System.String id_node, global::System.String description, global::System.String address, global::System.String codigo, Nullable<global::System.DateTime> fechaInicio, Nullable<global::System.DateTime> fechaFin, Nullable<global::System.Boolean> view_events, Nullable<global::System.Boolean> view_prenorec, Nullable<global::System.Boolean> view_prerec, Nullable<global::System.Boolean> view_ausnorec)
+        public ObjectResult<obtener_historico_alarmas_Result> obtener_historico_alarmas(Nullable<global::System.Int32> id_line, Nullable<global::System.Int32> id_sistema, global::System.String id_node, global::System.String description, global::System.String address, Nullable<global::System.Int32> codigo, Nullable<global::System.DateTime> fechaInicio, Nullable<global::System.DateTime> fechaFin, Nullable<global::System.Boolean> view_events, Nullable<global::System.Boolean> view_prenorec, Nullable<global::System.Boolean> view_prerec, Nullable<global::System.Boolean> view_ausnorec)
         {
             ObjectParameter id_lineParameter;
             if (id_line.HasValue)
@@ -250,13 +343,13 @@ namespace sga.Models
             }
     
             ObjectParameter codigoParameter;
-            if (codigo != null)
+            if (codigo.HasValue)
             {
                 codigoParameter = new ObjectParameter("codigo", codigo);
             }
             else
             {
-                codigoParameter = new ObjectParameter("codigo", typeof(global::System.String));
+                codigoParameter = new ObjectParameter("codigo", typeof(global::System.Int32));
             }
     
             ObjectParameter fechaInicioParameter;
@@ -320,58 +413,6 @@ namespace sga.Models
             }
     
             return base.ExecuteFunction<obtener_historico_alarmas_Result>("obtener_historico_alarmas", id_lineParameter, id_sistemaParameter, id_nodeParameter, descriptionParameter, addressParameter, codigoParameter, fechaInicioParameter, fechaFinParameter, view_eventsParameter, view_prenorecParameter, view_prerecParameter, view_ausnorecParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="id_line">No Metadata Documentation available.</param>
-        /// <param name="fechaInicio">No Metadata Documentation available.</param>
-        /// <param name="fechaFin">No Metadata Documentation available.</param>
-        /// <param name="intervalos">No Metadata Documentation available.</param>
-        public ObjectResult<alarmas_cantidad_Result> alarmas_cantidad(Nullable<global::System.Int32> id_line, Nullable<global::System.DateTime> fechaInicio, Nullable<global::System.DateTime> fechaFin, Nullable<global::System.Int32> intervalos)
-        {
-            ObjectParameter id_lineParameter;
-            if (id_line.HasValue)
-            {
-                id_lineParameter = new ObjectParameter("id_line", id_line);
-            }
-            else
-            {
-                id_lineParameter = new ObjectParameter("id_line", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter fechaInicioParameter;
-            if (fechaInicio.HasValue)
-            {
-                fechaInicioParameter = new ObjectParameter("fechaInicio", fechaInicio);
-            }
-            else
-            {
-                fechaInicioParameter = new ObjectParameter("fechaInicio", typeof(global::System.DateTime));
-            }
-    
-            ObjectParameter fechaFinParameter;
-            if (fechaFin.HasValue)
-            {
-                fechaFinParameter = new ObjectParameter("fechaFin", fechaFin);
-            }
-            else
-            {
-                fechaFinParameter = new ObjectParameter("fechaFin", typeof(global::System.DateTime));
-            }
-    
-            ObjectParameter intervalosParameter;
-            if (intervalos.HasValue)
-            {
-                intervalosParameter = new ObjectParameter("intervalos", intervalos);
-            }
-            else
-            {
-                intervalosParameter = new ObjectParameter("intervalos", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<alarmas_cantidad_Result>("alarmas_cantidad", id_lineParameter, fechaInicioParameter, fechaFinParameter, intervalosParameter);
         }
 
         #endregion
@@ -773,9 +814,9 @@ namespace sga.Models
         /// <param name="event">Initial value of the event property.</param>
         /// <param name="eventDescription">Initial value of the eventDescription property.</param>
         /// <param name="node">Initial value of the node property.</param>
-        /// <param name="idAlarm">Initial value of the idAlarm property.</param>
         /// <param name="timeStampOn">Initial value of the timeStampOn property.</param>
-        public static obtener_historico_alarmas_Result Createobtener_historico_alarmas_Result(global::System.String estado, global::System.String description, global::System.String timeOn, global::System.String timeOff, global::System.String timeAcknowledge, global::System.String timeReset, global::System.String timeQuarantine, global::System.String @event, global::System.String eventDescription, global::System.String node, global::System.Int32 idAlarm, global::System.Int64 timeStampOn)
+        /// <param name="idAlarm">Initial value of the idAlarm property.</param>
+        public static obtener_historico_alarmas_Result Createobtener_historico_alarmas_Result(global::System.String estado, global::System.String description, global::System.String timeOn, global::System.String timeOff, global::System.String timeAcknowledge, global::System.String timeReset, global::System.String timeQuarantine, global::System.String @event, global::System.String eventDescription, global::System.String node, global::System.Int64 timeStampOn, global::System.Int32 idAlarm)
         {
             obtener_historico_alarmas_Result obtener_historico_alarmas_Result = new obtener_historico_alarmas_Result();
             obtener_historico_alarmas_Result.estado = estado;
@@ -788,8 +829,8 @@ namespace sga.Models
             obtener_historico_alarmas_Result.@event = @event;
             obtener_historico_alarmas_Result.eventDescription = eventDescription;
             obtener_historico_alarmas_Result.node = node;
-            obtener_historico_alarmas_Result.idAlarm = idAlarm;
             obtener_historico_alarmas_Result.timeStampOn = timeStampOn;
+            obtener_historico_alarmas_Result.idAlarm = idAlarm;
             return obtener_historico_alarmas_Result;
         }
 
@@ -1041,30 +1082,6 @@ namespace sga.Models
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 idAlarm
-        {
-            get
-            {
-                return _idAlarm;
-            }
-            set
-            {
-                OnidAlarmChanging(value);
-                ReportPropertyChanging("idAlarm");
-                _idAlarm = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("idAlarm");
-                OnidAlarmChanged();
-            }
-        }
-        private global::System.Int32 _idAlarm;
-        partial void OnidAlarmChanging(global::System.Int32 value);
-        partial void OnidAlarmChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.Int64 timeStampOn
         {
             get
@@ -1083,6 +1100,349 @@ namespace sga.Models
         private global::System.Int64 _timeStampOn;
         partial void OntimeStampOnChanging(global::System.Int64 value);
         partial void OntimeStampOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 idAlarm
+        {
+            get
+            {
+                return _idAlarm;
+            }
+            set
+            {
+                OnidAlarmChanging(value);
+                ReportPropertyChanging("idAlarm");
+                _idAlarm = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("idAlarm");
+                OnidAlarmChanged();
+            }
+        }
+        private global::System.Int32 _idAlarm;
+        partial void OnidAlarmChanging(global::System.Int32 value);
+        partial void OnidAlarmChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="DATOS_SCADAModel", Name="obtener_info_alarma_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class obtener_info_alarma_Result : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new obtener_info_alarma_Result object.
+        /// </summary>
+        /// <param name="timeOn">Initial value of the timeOn property.</param>
+        /// <param name="estado">Initial value of the estado property.</param>
+        /// <param name="codigo">Initial value of the codigo property.</param>
+        public static obtener_info_alarma_Result Createobtener_info_alarma_Result(global::System.String timeOn, global::System.String estado, global::System.Int32 codigo)
+        {
+            obtener_info_alarma_Result obtener_info_alarma_Result = new obtener_info_alarma_Result();
+            obtener_info_alarma_Result.timeOn = timeOn;
+            obtener_info_alarma_Result.estado = estado;
+            obtener_info_alarma_Result.codigo = codigo;
+            return obtener_info_alarma_Result;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String timeOn
+        {
+            get
+            {
+                return _timeOn;
+            }
+            set
+            {
+                OntimeOnChanging(value);
+                ReportPropertyChanging("timeOn");
+                _timeOn = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("timeOn");
+                OntimeOnChanged();
+            }
+        }
+        private global::System.String _timeOn;
+        partial void OntimeOnChanging(global::System.String value);
+        partial void OntimeOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String descripcion
+        {
+            get
+            {
+                return _descripcion;
+            }
+            set
+            {
+                OndescripcionChanging(value);
+                ReportPropertyChanging("descripcion");
+                _descripcion = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("descripcion");
+                OndescripcionChanged();
+            }
+        }
+        private global::System.String _descripcion;
+        partial void OndescripcionChanging(global::System.String value);
+        partial void OndescripcionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String estado
+        {
+            get
+            {
+                return _estado;
+            }
+            set
+            {
+                OnestadoChanging(value);
+                ReportPropertyChanging("estado");
+                _estado = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("estado");
+                OnestadoChanged();
+            }
+        }
+        private global::System.String _estado;
+        partial void OnestadoChanging(global::System.String value);
+        partial void OnestadoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 codigo
+        {
+            get
+            {
+                return _codigo;
+            }
+            set
+            {
+                OncodigoChanging(value);
+                ReportPropertyChanging("codigo");
+                _codigo = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("codigo");
+                OncodigoChanged();
+            }
+        }
+        private global::System.Int32 _codigo;
+        partial void OncodigoChanging(global::System.Int32 value);
+        partial void OncodigoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String grupo
+        {
+            get
+            {
+                return _grupo;
+            }
+            set
+            {
+                OngrupoChanging(value);
+                ReportPropertyChanging("grupo");
+                _grupo = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("grupo");
+                OngrupoChanged();
+            }
+        }
+        private global::System.String _grupo;
+        partial void OngrupoChanging(global::System.String value);
+        partial void OngrupoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> prioridad
+        {
+            get
+            {
+                return _prioridad;
+            }
+            set
+            {
+                OnprioridadChanging(value);
+                ReportPropertyChanging("prioridad");
+                _prioridad = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("prioridad");
+                OnprioridadChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _prioridad;
+        partial void OnprioridadChanging(Nullable<global::System.Int32> value);
+        partial void OnprioridadChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String alarmIv
+        {
+            get
+            {
+                return _alarmIv;
+            }
+            set
+            {
+                OnalarmIvChanging(value);
+                ReportPropertyChanging("alarmIv");
+                _alarmIv = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("alarmIv");
+                OnalarmIvChanged();
+            }
+        }
+        private global::System.String _alarmIv;
+        partial void OnalarmIvChanging(global::System.String value);
+        partial void OnalarmIvChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String alarmaPi
+        {
+            get
+            {
+                return _alarmaPi;
+            }
+            set
+            {
+                OnalarmaPiChanging(value);
+                ReportPropertyChanging("alarmaPi");
+                _alarmaPi = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("alarmaPi");
+                OnalarmaPiChanged();
+            }
+        }
+        private global::System.String _alarmaPi;
+        partial void OnalarmaPiChanging(global::System.String value);
+        partial void OnalarmaPiChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> sistema
+        {
+            get
+            {
+                return _sistema;
+            }
+            set
+            {
+                OnsistemaChanging(value);
+                ReportPropertyChanging("sistema");
+                _sistema = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("sistema");
+                OnsistemaChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _sistema;
+        partial void OnsistemaChanging(Nullable<global::System.Int32> value);
+        partial void OnsistemaChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String direccion
+        {
+            get
+            {
+                return _direccion;
+            }
+            set
+            {
+                OndireccionChanging(value);
+                ReportPropertyChanging("direccion");
+                _direccion = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("direccion");
+                OndireccionChanged();
+            }
+        }
+        private global::System.String _direccion;
+        partial void OndireccionChanging(global::System.String value);
+        partial void OndireccionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> bit
+        {
+            get
+            {
+                return _bit;
+            }
+            set
+            {
+                OnbitChanging(value);
+                ReportPropertyChanging("bit");
+                _bit = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("bit");
+                OnbitChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _bit;
+        partial void OnbitChanging(Nullable<global::System.Int32> value);
+        partial void OnbitChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> coil
+        {
+            get
+            {
+                return _coil;
+            }
+            set
+            {
+                OncoilChanging(value);
+                ReportPropertyChanging("coil");
+                _coil = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("coil");
+                OncoilChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _coil;
+        partial void OncoilChanging(Nullable<global::System.Int32> value);
+        partial void OncoilChanged();
 
         #endregion
     }

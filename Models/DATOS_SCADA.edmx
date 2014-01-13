@@ -29,13 +29,18 @@
           <Parameter Name="id_node" Type="varchar" Mode="In" />
           <Parameter Name="description" Type="varchar" Mode="In" />
           <Parameter Name="address" Type="varchar" Mode="In" />
-          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="codigo" Type="int" Mode="In" />
           <Parameter Name="fechaInicio" Type="datetime" Mode="In" />
           <Parameter Name="fechaFin" Type="datetime" Mode="In" />
           <Parameter Name="view_events" Type="bit" Mode="In" />
           <Parameter Name="view_prenorec" Type="bit" Mode="In" />
           <Parameter Name="view_prerec" Type="bit" Mode="In" />
           <Parameter Name="view_ausnorec" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="usp_web_obtener_info_alarma" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+          <Parameter Name="id_alarm" Type="int" Mode="In" />
+          <Parameter Name="time_on" Type="datetime" Mode="In" />
         </Function>
         <Function Name="usp_ws_alarmas_cantidad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id_line" Type="int" Mode="In" />
@@ -65,25 +70,30 @@
           <FunctionImport Name="llenar_combo_nodos" ReturnType="Collection(DATOS_SCADAModel.llenar_combo_nodos_Result)">
           <Parameter Name="id_line" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="alarmas_cantidad" ReturnType="Collection(DATOS_SCADAModel.alarmas_cantidad_Result)">
+            <Parameter Name="id_line" Mode="In" Type="Int32" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
+            <Parameter Name="intervalos" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="obtener_info_alarma" ReturnType="Collection(DATOS_SCADAModel.obtener_info_alarma_Result)">
+            <Parameter Name="id_line" Mode="In" Type="Int32" />
+            <Parameter Name="id_alarm" Mode="In" Type="Int32" />
+            <Parameter Name="time_on" Mode="In" Type="DateTime" />
+          </FunctionImport>
           <FunctionImport Name="obtener_historico_alarmas" ReturnType="Collection(DATOS_SCADAModel.obtener_historico_alarmas_Result)">
             <Parameter Name="id_line" Mode="In" Type="Int32" />
             <Parameter Name="id_sistema" Mode="In" Type="Int32" />
             <Parameter Name="id_node" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
             <Parameter Name="address" Mode="In" Type="String" />
-            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="codigo" Mode="In" Type="Int32" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="view_events" Mode="In" Type="Boolean" />
             <Parameter Name="view_prenorec" Mode="In" Type="Boolean" />
             <Parameter Name="view_prerec" Mode="In" Type="Boolean" />
             <Parameter Name="view_ausnorec" Mode="In" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="alarmas_cantidad" ReturnType="Collection(DATOS_SCADAModel.alarmas_cantidad_Result)">
-            <Parameter Name="id_line" Mode="In" Type="Int32" />
-            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
-            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
-            <Parameter Name="intervalos" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="llenar_combo_sistemas_Result">
@@ -114,13 +124,27 @@
           <Property Type="String" Name="event" Nullable="false" />
           <Property Type="String" Name="eventDescription" Nullable="false" />
           <Property Type="String" Name="node" Nullable="false" />
-          <Property Type="Int32" Name="idAlarm" Nullable="false" />
           <Property Type="Int64" Name="timeStampOn" Nullable="false" />
+          <Property Type="Int32" Name="idAlarm" Nullable="false" />
         </ComplexType>
         <ComplexType Name="alarmas_cantidad_Result" >
           <Property Type="Int64" Name="x" Nullable="false" />
           <Property Type="Int32" Name="y" Nullable="false" />
           <Property Type="Int32" Name="z" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="obtener_info_alarma_Result">
+          <Property Type="String" Name="timeOn" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="descripcion" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="estado" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="codigo" Nullable="false" />
+          <Property Type="String" Name="grupo" Nullable="true" MaxLength="60" />
+          <Property Type="Int32" Name="prioridad" Nullable="true" />
+          <Property Type="String" Name="alarmIv" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="alarmaPi" Nullable="true" MaxLength="60" />
+          <Property Type="Int32" Name="sistema" Nullable="true" />
+          <Property Type="String" Name="direccion" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="bit" Nullable="true" />
+          <Property Type="Int32" Name="coil" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -165,6 +189,30 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="alarmas_cantidad" FunctionName="DATOS_SCADAModel.Store.usp_ws_alarmas_cantidad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.alarmas_cantidad_Result">
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="obtener_info_alarma" FunctionName="DATOS_SCADAModel.Store.usp_web_obtener_info_alarma">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.obtener_info_alarma_Result">
+                <ScalarProperty Name="timeOn" ColumnName="timeOn" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="grupo" ColumnName="grupo" />
+                <ScalarProperty Name="prioridad" ColumnName="prioridad" />
+                <ScalarProperty Name="alarmIv" ColumnName="alarmIv" />
+                <ScalarProperty Name="alarmaPi" ColumnName="alarmaPi" />
+                <ScalarProperty Name="sistema" ColumnName="sistema" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="bit" ColumnName="bit" />
+                <ScalarProperty Name="coil" ColumnName="coil" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="obtener_historico_alarmas" FunctionName="DATOS_SCADAModel.Store.usp_web_obtener_historico_alarmas">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DATOS_SCADAModel.obtener_historico_alarmas_Result">
@@ -177,12 +225,9 @@
                 <ScalarProperty Name="timeQuarantine" ColumnName="timeQuarantine" />
                 <ScalarProperty Name="event" ColumnName="event" />
                 <ScalarProperty Name="eventDescription" ColumnName="eventDescription" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="alarmas_cantidad" FunctionName="DATOS_SCADAModel.Store.usp_ws_alarmas_cantidad">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DATOS_SCADAModel.alarmas_cantidad_Result">
+                <ScalarProperty Name="node" ColumnName="node" />
+                <ScalarProperty Name="timeStampOn" ColumnName="timeStampOn" />
+                <ScalarProperty Name="idAlarm" ColumnName="idAlarm" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

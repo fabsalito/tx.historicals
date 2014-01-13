@@ -1,81 +1,73 @@
-﻿@{
+﻿@model sga.ViewModels.InfoAlarmasViewModel
+           
+@{
     Layout = "";
 }
 
-<table>
+<table style=" width: 100%">
     <thead>
         <tr>
-            <th colspan="2">General</th>
+            <th colspan="2" style="text-align: left;font-size: medium;">General</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><label>Fecha de activa. (T. ON): </label></td>
-            <td></td>
+            <td style=" text-align: left; font-weight: bold; "><label>Fecha de activa. (T. ON): </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.timeOn</label></td>
         </tr>
         <tr>
-            <td><label>Descripción: </label></td>
-            <td></td>
+            <td style=" text-align: left; font-weight: bold; "><label>Descripción: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.descripcion</label></td>
         </tr>
         <tr>
-            <td><label>Estado: </label></td>
-            <td></td>
+            <td style=" text-align: left; font-weight: bold; "><label>Estado: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.estado</label></td>
         </tr>
         <tr>
-            <td colspan="2">
-                <table>
-                    <tr>
-                        <td><label>Código: </label></td>
-                        <td><label></label></td>
-                        <td><label>Grupo: </label></td>
-                        <td><label></label></td>
-                        <td><label>Prioridad: </label></td>
-                        <td><label></label></td>
-                    </tr>
-                </table>
-            </td>
+            <td style=" text-align: left; font-weight: bold; "><label>Código: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.codigo</label></td>
+        </tr>
+        <tr>
+            <td style=" text-align: left; font-weight: bold; "><label>Grupo: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.grupo</label></td>
+        </tr>
+        <tr>
+            <td style=" text-align: left; font-weight: bold; "><label>Prioridad: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.prioridad</label></td>
         </tr>
     </tbody>
 </table>
 
-<table>
+<table style=" width: 100%">
     <thead>
         <tr>
-            <th colspan="2">Mantenimiento</th>
+            <th colspan="2" style="text-align: left; font-size: medium;">Mantenimiento</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><label>Alarma IV: </label></td>
-            <td></td>
+            <td style=" text-align: left; font-weight: bold; "><label>Alarma IV: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.alarmIv</label></td>
         </tr>
         <tr>
-            <td><label>Alarma P&I: </label></td>
-            <td></td>
+            <td style=" text-align: left; font-weight: bold; "><label>Alarma PI: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.alarmaPi</label></td>
         </tr>
         <tr>
-            <td><label>Sistema: </label></td>
-            <td></td>
+            <td style=" text-align: left; font-weight: bold; "><label>Sistema: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.sistema</label></td>
         </tr>
         <tr>
-            <td colspan="2">
-                <table>
-                    <tr>
-                        <td><label>Dirección: </label></td>
-                        <td><label></label></td>
-                        <td><label>Bit: </label></td>
-                        <td><label></label></td>
-                        <td><label>Coil: </label></td>
-                        <td><label></label></td>
-                    </tr>
-                </table>
-            </td>
+            <td style=" text-align: left; font-weight: bold; "><label>Dirección: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.direccion</label></td>
+        </tr>
+        <tr>
+            <td style=" text-align: left; font-weight: bold; "><label>Bit: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.bit</label></td>
+        </tr>
+        <tr>
+            <td style=" text-align: left; font-weight: bold; "><label>Coil: </label></td>
+            <td style=" text-align: left; "><label>@Model.alarma.coil</label></td>
         </tr>
     </tbody>
 </table>
-
-@ViewBag.idLinea
-@ViewBag.idAlarm
-@ViewBag.node
-@ViewBag.timeStampOn
-

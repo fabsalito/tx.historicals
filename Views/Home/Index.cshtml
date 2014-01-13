@@ -101,13 +101,13 @@ Histórico de alarmas - @ViewBag.Linea
         <thead>
             <tr>
                 <th>EST.</th>
-                <th>DESCRIPCIÓN</th>
-                <th>T. ON</th>
-                <th>T. OFF</th>
+                <th>[CODIGO] DESCRIPCIÓN</th>
+                <th>TIEMPO ON</th>
+                <th>TIEMPO OFF</th>
 
-                <th>T. ACEPTA</th>
-                <th>T. RESET</th>
-                <th>T. CUA.</th>
+                <th>TIEMPO ACEPT.</th>
+                <th>TIEMPO RESET</th>
+                <th>TIEMPO CUARENT.</th>
 
                 <th>CAUSA</th>
             </tr>
@@ -138,7 +138,7 @@ Histórico de alarmas - @ViewBag.Linea
     <input id="hidUrlAlarmInfo" type="hidden" value="@Url.Action("VerAlarmInfo", "Home")" />
 </div>
 
-<div id="divDialogAlarmInfo" title="Información de alarma" class="dialogGeneral">
+<div id="divDialogAlarmInfo" title="Información de alarma" class="dialogGeneral" style="text-align: center;">
 
 </div>
 }
@@ -367,7 +367,7 @@ Histórico de alarmas - @ViewBag.Linea
                 // verifica si tiene que recortar texto y aplicar tooltip
                 if ($('td:eq(1)', nRow).text().length > 35) {
                     // define title para tooltip
-                    $('td:eq(1)', nRow).attr('title', aData[1]);
+                    $('td:eq(1)', nRow).attr('title', '<b>Descripción: </b></br>' + aData[1] + '</br></br><b>Causa: </b></br>' + aData[8]);
                     $('td:eq(1)', nRow).attr('class', 'Tooltip');
 
                     // recorta el texto
@@ -392,26 +392,26 @@ Histórico de alarmas - @ViewBag.Linea
 
                 // imagen para ausentes no reconocidas
                 if ("" != aData[2] && "" != aData[3] && "" == aData[4]) {
-                    $('td:eq(0)', nRow).html('<img src="@Url.Content("~/Content/images/estados/est_rojo_m.gif")" />');
+                    $('td:eq(0)', nRow).html('<img style="cursor: pointer;" src="@Url.Content("~/Content/images/estados/est_rojo_m.gif")" />');
                 }
 
                 // imagen para presentes no reconocidas
                 if ("" != aData[2] && "" == aData[3] && "" == aData[4]) {
-                    $('td:eq(0)', nRow).html('<img src="@Url.Content("~/Content/images/estados/est_azul_m.gif")" />');
+                    $('td:eq(0)', nRow).html('<img style="cursor: pointer;" src="@Url.Content("~/Content/images/estados/est_azul_m.gif")" />');
                 }
 
                 // imagen para persentes reconocidas
                 if ("" != aData[2] && "" == aData[3] && "" != aData[4]) {
-                    $('td:eq(0)', nRow).html('<img src="@Url.Content("~/Content/images/estados/est_verde_m.gif")" />');
+                    $('td:eq(0)', nRow).html('<img style="cursor: pointer;" src="@Url.Content("~/Content/images/estados/est_verde_m.gif")" />');
                 }
 
-                console.log(aData[9]);
-                console.log(aData[10]);
-                console.log(aData[11]);
+                console.log(aData[1]);
+                //console.log(aData[10]);
+                //console.log(aData[11]);
 
                 // asigna llamada al diálogo
                 $('td:eq(0)', nRow).on('click', function () {
-                    VerAlarmInfo("'" + aData[9] + "'", aData[10], aData[11]);
+                    VerAlarmInfo(aData[11], aData[2]);
                 });
             },
             "fnDrawCallback": function (oSettings) {

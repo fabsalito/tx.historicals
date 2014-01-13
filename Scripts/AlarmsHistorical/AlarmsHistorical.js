@@ -58,7 +58,14 @@ function ActualizaFiltroContainers() {
     $("#hidFiltroNode").val($("#ddlFiltroNodo").val());
     $("#hidFiltroDiaInicio").val($("#txtFiltroDiaInicio").val());
     $("#hidFiltroDiaFin").val($("#txtFiltroDiaFin").val());
-    $("#hidFiltroCodigo").val($("#txtFiltroCodigo").val());
+
+    if ('' == $("#txtFiltroCodigo").val()) {
+        $("#hidFiltroCodigo").val('-1');
+    }
+    else {
+        $("#hidFiltroCodigo").val($("#txtFiltroCodigo").val());
+    }
+    
     $("#hidEventosChckBx1").val($("#eventosChckBx1:checked").val());
     $("#hidEstadosChckBx1").val($("#estadosChckBx1:checked").val());
     $("#hidEstadosChckBx2").val($("#estadosChckBx2:checked").val());
@@ -69,7 +76,7 @@ function dataTableRezize() {
     $('.dataTables_scrollBody').css('height', $('.content-main').height() - ($('.dataTables_filter').height() * 2) - $('.dataTables_info').height() - $('.dataTables_scrollHead').height());
 }
 
-function VerAlarmInfo(node, idAlarm, timeStampOn) {
+function VerAlarmInfo(idAlarm, timeOn) {
     var params;
     var url = $("#hidUrlAlarmInfo").val();
     var idLinea = $("#hidIdLinea").val();
@@ -77,9 +84,8 @@ function VerAlarmInfo(node, idAlarm, timeStampOn) {
     // define parámetros (json)
     params = {
         "idLinea": idLinea,
-        "node": node,
         "idAlarm": idAlarm,
-        "timeStampOn": timeStampOn
+        "timeOn": timeOn
     };
 
     // carga partial view en el diálogo
