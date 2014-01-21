@@ -6,6 +6,9 @@
     <edmx:StorageModels>
     <Schema Namespace="DATOS_SCADAModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="DATOS_SCADAModelStoreContainer" />
+        <Function Name="getLines" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="lineId" Type="int" Mode="In" />
+        </Function>
         <Function Name="usp_web_llenar_combo_nodos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id_line" Type="int" Mode="In" />
         </Function>
@@ -95,6 +98,12 @@
             <Parameter Name="view_prerec" Mode="In" Type="Boolean" />
             <Parameter Name="view_ausnorec" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="get_alarm_group_tree" ReturnType="Collection(DATOS_SCADAModel.get_alarm_group_tree_Result)">
+            <Parameter Name="id_line" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getLines" ReturnType="Collection(DATOS_SCADAModel.getLines_Result)">
+            <Parameter Name="lineId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="llenar_combo_sistemas_Result">
           <Property Type="Int32" Name="idPlc" Nullable="false" />
@@ -145,6 +154,16 @@
           <Property Type="String" Name="direccion" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="bit" Nullable="true" />
           <Property Type="Int32" Name="coil" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_alarm_group_tree_Result">
+          <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
+        </ComplexType>
+        <ComplexType Name="getLines_Result">
+          <Property Type="Int32" Name="id_line" Nullable="false" />
+          <Property Type="String" Name="line" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ip" Nullable="false" MaxLength="15" />
+          <Property Type="Int16" Name="port" Nullable="false" />
+          <Property Type="Int16" Name="version" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -228,6 +247,17 @@
                 <ScalarProperty Name="node" ColumnName="node" />
                 <ScalarProperty Name="timeStampOn" ColumnName="timeStampOn" />
                 <ScalarProperty Name="idAlarm" ColumnName="idAlarm" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getLines" FunctionName="DATOS_SCADAModel.Store.getLines">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.getLines_Result">
+                <ScalarProperty Name="id_line" ColumnName="id_line" />
+                <ScalarProperty Name="line" ColumnName="line" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="port" ColumnName="port" />
+                <ScalarProperty Name="version" ColumnName="version" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

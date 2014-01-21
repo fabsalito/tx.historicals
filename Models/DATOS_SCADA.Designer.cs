@@ -414,6 +414,44 @@ namespace sga.Models
     
             return base.ExecuteFunction<obtener_historico_alarmas_Result>("obtener_historico_alarmas", id_lineParameter, id_sistemaParameter, id_nodeParameter, descriptionParameter, addressParameter, codigoParameter, fechaInicioParameter, fechaFinParameter, view_eventsParameter, view_prenorecParameter, view_prerecParameter, view_ausnorecParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="id_line">No Metadata Documentation available.</param>
+        public ObjectResult<get_alarm_group_tree_Result> get_alarm_group_tree(Nullable<global::System.Int32> id_line)
+        {
+            ObjectParameter id_lineParameter;
+            if (id_line.HasValue)
+            {
+                id_lineParameter = new ObjectParameter("id_line", id_line);
+            }
+            else
+            {
+                id_lineParameter = new ObjectParameter("id_line", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<get_alarm_group_tree_Result>("get_alarm_group_tree", id_lineParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="lineId">No Metadata Documentation available.</param>
+        public ObjectResult<getLines_Result> getLines(Nullable<global::System.Int32> lineId)
+        {
+            ObjectParameter lineIdParameter;
+            if (lineId.HasValue)
+            {
+                lineIdParameter = new ObjectParameter("lineId", lineId);
+            }
+            else
+            {
+                lineIdParameter = new ObjectParameter("lineId", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<getLines_Result>("getLines", lineIdParameter);
+        }
 
         #endregion
     }
@@ -522,6 +560,198 @@ namespace sga.Models
         private global::System.Int32 _z;
         partial void OnzChanging(global::System.Int32 value);
         partial void OnzChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="DATOS_SCADAModel", Name="get_alarm_group_tree_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class get_alarm_group_tree_Result : ComplexObject
+    {
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                OndescriptionChanging(value);
+                ReportPropertyChanging("description");
+                _description = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("description");
+                OndescriptionChanged();
+            }
+        }
+        private global::System.String _description;
+        partial void OndescriptionChanging(global::System.String value);
+        partial void OndescriptionChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="DATOS_SCADAModel", Name="getLines_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class getLines_Result : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new getLines_Result object.
+        /// </summary>
+        /// <param name="id_line">Initial value of the id_line property.</param>
+        /// <param name="line">Initial value of the line property.</param>
+        /// <param name="ip">Initial value of the ip property.</param>
+        /// <param name="port">Initial value of the port property.</param>
+        /// <param name="version">Initial value of the version property.</param>
+        public static getLines_Result CreategetLines_Result(global::System.Int32 id_line, global::System.String line, global::System.String ip, global::System.Int16 port, global::System.Int16 version)
+        {
+            getLines_Result getLines_Result = new getLines_Result();
+            getLines_Result.id_line = id_line;
+            getLines_Result.line = line;
+            getLines_Result.ip = ip;
+            getLines_Result.port = port;
+            getLines_Result.version = version;
+            return getLines_Result;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 id_line
+        {
+            get
+            {
+                return _id_line;
+            }
+            set
+            {
+                Onid_lineChanging(value);
+                ReportPropertyChanging("id_line");
+                _id_line = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("id_line");
+                Onid_lineChanged();
+            }
+        }
+        private global::System.Int32 _id_line;
+        partial void Onid_lineChanging(global::System.Int32 value);
+        partial void Onid_lineChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String line
+        {
+            get
+            {
+                return _line;
+            }
+            set
+            {
+                OnlineChanging(value);
+                ReportPropertyChanging("line");
+                _line = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("line");
+                OnlineChanged();
+            }
+        }
+        private global::System.String _line;
+        partial void OnlineChanging(global::System.String value);
+        partial void OnlineChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ip
+        {
+            get
+            {
+                return _ip;
+            }
+            set
+            {
+                OnipChanging(value);
+                ReportPropertyChanging("ip");
+                _ip = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ip");
+                OnipChanged();
+            }
+        }
+        private global::System.String _ip;
+        partial void OnipChanging(global::System.String value);
+        partial void OnipChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 port
+        {
+            get
+            {
+                return _port;
+            }
+            set
+            {
+                OnportChanging(value);
+                ReportPropertyChanging("port");
+                _port = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("port");
+                OnportChanged();
+            }
+        }
+        private global::System.Int16 _port;
+        partial void OnportChanging(global::System.Int16 value);
+        partial void OnportChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                OnversionChanging(value);
+                ReportPropertyChanging("version");
+                _version = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("version");
+                OnversionChanged();
+            }
+        }
+        private global::System.Int16 _version;
+        partial void OnversionChanging(global::System.Int16 value);
+        partial void OnversionChanged();
 
         #endregion
     }

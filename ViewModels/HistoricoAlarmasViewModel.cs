@@ -10,5 +10,6 @@ namespace sga.ViewModels
         public IEnumerable<Models.obtener_historico_alarmas_Result> alarmas;
         public IEnumerable<Models.llenar_combo_sistemas_Result> sistemas;
         public IEnumerable<Models.llenar_combo_nodos_Result> nodos;
+        public IEnumerable<Models.getLines_Result> lines;
     }
 }

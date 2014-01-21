@@ -58,6 +58,7 @@ function ActualizaFiltroContainers() {
     $("#hidFiltroNode").val($("#ddlFiltroNodo").val());
     $("#hidFiltroDiaInicio").val($("#txtFiltroDiaInicio").val());
     $("#hidFiltroDiaFin").val($("#txtFiltroDiaFin").val());
+    $("#hidIdLinea").val($("#ddlFiltroLinea").val());
 
     if ('' == $("#txtFiltroCodigo").val()) {
         $("#hidFiltroCodigo").val('-1');
@@ -99,3 +100,47 @@ function VerAlarmInfoDialog(data) {
     // muestra el diálogo
     $("#divDialogAlarmInfo").dialog('open');
 }
+
+//function ActualizaComboGrupo() {
+//    var params;
+//    var url = $("#hidUrlActualizaComboGrupo").val();
+//    var idLinea = $("#hidIdLinea").val();
+//    var idConjunto = $("#ddlFiltroConjunto").val();
+
+//    // validaciones
+//    if ("index" == idConjunto) {
+//        idConjunto = -1;
+//    }
+
+//    params = {
+//        "idLinea": idLinea,
+//        "idConjunto": idConjunto
+//    };
+
+//    // llama al aacción que devolverá resultados para el combo
+//    CallBacks.loadJsonView(url, "POST", ActualizaComboGrupoFill, params);
+//}
+
+//function ActualizaComboGrupoFill(jsonvalue) {
+//    var combo = $("#ddlFiltroGrupoRodillo").msDropDown().data("dd");
+
+//    // destruye combo
+//    combo.destroy();
+
+//    // vacía drop down
+//    $("#ddlFiltroGrupoRodillo").empty();
+
+//    // agrega option "Seleccionar"
+//    combo.add(new Option("[Seleccionar]", "index"));
+
+//    // agregar los option obtenidos
+//    $.each(jsonvalue, function (i, data) {
+//        var desc = data.grupo;
+//        var id = data.id_grupo;
+
+//        combo.add(new Option(desc.toString(), id.toString()));
+//    });
+
+//    // indica que el select es un msDropDown
+//    $("#ddlFiltroGrupoRodillo").msDropDown();
+//}

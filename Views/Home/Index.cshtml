@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Histórico de alarmas";
     ViewBag.TitleToolbar = "Filtros para alarmas";
-    ViewBag.Linea = "Tandem";
+    ViewBag.Linea = "";
 }
 
 @section Styles{
@@ -17,6 +17,20 @@ Histórico de alarmas - @ViewBag.Linea
 
 @section Toolbar{
 <table>
+    <tr>
+        <td colspan="5">
+            <span class="titulo">Línea</span><br />
+            <select id="ddlFiltroLinea" class="cmbStd cmbMediano inputContenido inputFocus" >
+                <option value="-1">[Seleccionar]</option>
+                @{
+                    foreach (var item in @Model.lines)
+                    {
+                        <option value="@item.id_line">@item.line</option>
+                    }
+                }
+            </select>
+        </td>
+    </tr>
     <tr>
         <td>
             <span class="titulo">Descripción</span><br />
@@ -84,7 +98,7 @@ Histórico de alarmas - @ViewBag.Linea
 
         <td colspan="2">
             <span class="titulo">Eventos</span><br />
-            <input type="checkbox" id="eventosChckBx1" name="eventosChckBx1"/>
+            <input type="checkbox" id="eventosChckBx1" name="eventosChckBx1" data-label="Ver eventos"/>
         </td>
     </tr>
 </table>
@@ -405,7 +419,7 @@ Histórico de alarmas - @ViewBag.Linea
                     $('td:eq(0)', nRow).html('<img style="cursor: pointer;" src="@Url.Content("~/Content/images/estados/est_verde_m.gif")" />');
                 }
 
-                console.log(aData[1]);
+                //console.log(aData[1]);
                 //console.log(aData[10]);
                 //console.log(aData[11]);
 
@@ -423,9 +437,8 @@ Histórico de alarmas - @ViewBag.Linea
         $('#historical').dataTable().fnSetFilteringDelay();
 
         // aplica switch on-off al checkbox de eventos
-        $('#eventosChckBx1').iphoneStyle({
-            checkedLabel: 'SI',
-            uncheckedLabel: 'NO'
+        $('#eventosChckBx1').prettyCheckable({
+            color: "gray"
         });
 
         // aplica cool checkbox style a estados

@@ -18,6 +18,7 @@ namespace sga.Controllers
             ViewModels.HistoricoAlarmasViewModel datos = new ViewModels.HistoricoAlarmasViewModel();
             IEnumerable<Models.llenar_combo_sistemas_Result> sistemas;
             IEnumerable<Models.llenar_combo_nodos_Result> nodos;
+            IEnumerable<Models.getLines_Result> lines;
 
             try
             {
@@ -27,11 +28,13 @@ namespace sga.Controllers
                 // obtiene nodos
                 nodos = Object.llenar_combo_nodos(idLinea).ToList();
 
+                // obtiene linas
+                lines = Object.getLines(-1);
+
                 // define datos para la vista
                 datos.sistemas = sistemas;
                 datos.nodos= nodos;
-
-
+                datos.lines = lines;
 
                 return View(datos);
             }
@@ -98,6 +101,7 @@ namespace sga.Controllers
                     null == Session["sesDireccion"] ||
                     null == Session["sesSistema"] ||
                     null == Session["sesNode"] ||
+                    null == Session["sesLine"] ||
                     null == Session["sesShowEvents"] ||
                     null == Session["sesShowAusNoRec"] ||
                     null == Session["sesShowPreNoRec"] ||
@@ -114,6 +118,7 @@ namespace sga.Controllers
                     Session["sesDireccion"] = direccion;
                     Session["sesSistema"] = idSistema;
                     Session["sesNode"] = idNodo;
+                    Session["sesLine"] = idLinea;
                     Session["sesShowEvents"] = showEvents;
                     Session["sesShowAusNoRec"] = showAusNoRec;
                     Session["sesShowPreNoRec"] = showPreNoRec;
@@ -129,6 +134,7 @@ namespace sga.Controllers
                     Session["sesDireccion"].ToString() != direccion ||
                     Session["sesSistema"].ToString() != idSistema.ToString() ||
                     Session["sesNode"].ToString() != idNodo.ToString() ||
+                    Session["sesLine"].ToString() != idLinea.ToString() ||
                     Session["sesShowEvents"].ToString() != showEvents.ToString() ||
                     Session["sesShowAusNoRec"].ToString() != showAusNoRec.ToString() ||
                     Session["sesShowPreNoRec"].ToString() != showPreNoRec.ToString() ||
@@ -145,6 +151,7 @@ namespace sga.Controllers
                     Session["sesDireccion"] = direccion;
                     Session["sesSistema"] = idSistema;
                     Session["sesNode"] = idNodo;
+                    Session["sesLine"] = idLinea;
                     Session["sesShowEvents"] = showEvents;
                     Session["sesShowAusNoRec"] = showAusNoRec;
                     Session["sesShowPreNoRec"] = showPreNoRec;
