@@ -15,7 +15,8 @@ $(document).ready(function () {
     $(document).on("click", ".contenedorFiltroColapsable", function () {
         $(this).parent().children('.contenidoFiltros').slideToggle("slow", function () {
             // redefine el tamaño del contenido
-            $('.content-main').css('height', $(window).height() - $('.content-header').height()); // el 50 es el padding-top del body; usar media queries
+            //$('.content-main').css('height', $(window).height() - $('.content-header').height()); // el 50 es el padding-top del body; usar media queries
+            $('.content-main').css('height', $(window).height() - $('#divBreadcrumb').height() - $('#divToolbarContainer').height() - 27); // el 27 hard-code es temporal solo para pruebas
 
             // modifica height de grilla
             dataTableRezize();
@@ -23,12 +24,12 @@ $(document).ready(function () {
     });
 
     // define acciones para el windows resize
-    window.onresize = function () {
-        $('.content-main').css('height', $(window).height() - $('.content-header').height()); // el 50 es el padding-top del body; usar media queries
+    //    window.onresize = function () {
+    //        $('.content-main').css('height', $(window).height() - $('.content-header').height()); // el 50 es el padding-top del body; usar media queries
 
-        // modifica height de grilla
-        dataTableRezize();
-    };
+    //        // modifica height de grilla
+    //        dataTableRezize();
+    //    };
 
     //Cambia la flechita al mostrar u ocultar de fondo
     $(document).on("toggle", ".contenedorFiltroColapsable", function () {
@@ -169,7 +170,7 @@ $(document).ready(function () {
 
 
 
-});                     //FIN document ready
+});                          //FIN document ready
 
 
 function calculoResto(textArea, cantidadMax) {

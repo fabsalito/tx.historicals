@@ -61,7 +61,7 @@ function ActualizaFiltroContainers() {
     $("#hidIdLinea").val($("#ddlFiltroLinea").val());
 
     if ('' == $("#txtFiltroCodigo").val()) {
-        $("#hidFiltroCodigo").val('-1');
+        $("#hidFiltroCodigo").val('-1');5
     }
     else {
         $("#hidFiltroCodigo").val($("#txtFiltroCodigo").val());
