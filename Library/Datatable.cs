@@ -100,7 +100,7 @@ namespace DataTables
             IQueryable<T> subConsulta;
 
             // import property names
-            //list.Import(_properties.Select(x => x.Name).ToArray());
+            list.Import(_properties.Select(x => x.Name).ToArray());
 
             // parse the echo property (must be returned as int to prevent XSS-attack)
             list.sEcho = int.Parse(_httpRequest[ECHO]);
@@ -267,17 +267,17 @@ namespace DataTables
         public string iTotalRecords { get; set; }
         public string iTotalDisplayRecords { get; set; }
         public List<List<string>> aaData { get; set; }
-        //public string sColumns { get; set; }
+        public string sColumns { get; set; }
 
-        //public void Import(string[] properties)
-        //{
-        //    sColumns = string.Empty;
-        //    for (int i = 0; i < properties.Length; i++)
-        //    {
-        //        sColumns += properties[i];
-        //        if (i < properties.Length - 1)
-        //            sColumns += ",";
-        //    }
-        //}
+        public void Import(string[] properties)
+        {
+            sColumns = string.Empty;
+            for (int i = 0; i < properties.Length; i++)
+            {
+                sColumns += properties[i];
+                if (i < properties.Length - 1)
+                    sColumns += ",";
+            }
+        }
     }
 }

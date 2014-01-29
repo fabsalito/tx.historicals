@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Histórico de alarmas";
     ViewBag.TitleToolbar = "Filtros para alarmas";
-    ViewBag.Linea = "";
+    //ViewBag.Linea = "";
 }
 
 @section Styles{
@@ -12,17 +12,20 @@
 }
 
 @section Breadcrumb{
-Histórico de alarmas - @ViewBag.Linea
+Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
 }
 
 @section Toolbar{
 <table>
     <tr>
-        <td colspan="5">
+        <td>
             <span class="titulo">Línea</span><br />
-            <select id="ddlFiltroLinea" class="cmbStd cmbMediano inputContenido inputFocus" >
-                <option value="-1">[Seleccionar]</option>
+            <select id="ddlFiltroLinea" class="cmbStd cmbMediano inputContenido inputFocus" onchange="ActualizaComboSistema();" >
                 @{
+                    if (-1 == @ViewBag.idLinea)
+                    {
+                        <option value="-1">[Seleccionar]</option>
+                    }
                     foreach (var item in @Model.lines)
                     {
                         <option value="@item.id_line">@item.line</option>
@@ -30,13 +33,6 @@ Histórico de alarmas - @ViewBag.Linea
                 }
             </select>
         </td>
-    </tr>
-    <tr>
-        <td>
-            <span class="titulo">Descripción</span><br />
-            <input id="txtFiltroDescripcion" class="txtStd txtMediano" type="text" value="" />
-        </td>
-
         <td>
             <span class="titulo">Sistema</span><br />
             <select id="ddlFiltroSistema" class="cmbStd cmbMediano inputContenido inputFocus" >
@@ -49,17 +45,6 @@ Histórico de alarmas - @ViewBag.Linea
                 }
             </select>
         </td>
-
-        <td>
-            <span class="titulo">Dirección</span><br />
-            <input id="txtFiltroDireccion" type="text" class="txtStd txtMediano" value="" />
-        </td>
-
-        <td>
-            <span class="titulo">Código</span><br />
-            <input id="txtFiltroCodigo" type="text" class="txtStd txtMediano" value="" />
-        </td>
-
         <td>
             <span class="titulo">Nodo</span><br />
             <select id="ddlFiltroNodo" class="cmbStd cmbMediano inputContenido inputFocus" >
@@ -72,6 +57,36 @@ Histórico de alarmas - @ViewBag.Linea
                 }
             </select>
         </td>
+        <td rowspan="3">
+            <span class="titulo">
+                Estados &nbsp;
+                <img alt="Ayuda: Estados" title="" src="@Url.Content("~/Content/images/help.gif")" border="0" class="estadoTooltip" />
+            </span><br />
+            <input type="checkbox" id="estadosChckBx1" name="estadosChckBx1" checked="checked" data-label="Ausentes no reconocidas"/><br />
+            @*<img alt="" class="ImageCheckbox" title="Ausentes no reconocidas" src="@Url.Content("~/Content/images/estados/est_rojo_m.gif")" />*@
+            <input type="checkbox" id="estadosChckBx2" name="estadosChckBx2" data-label="Presentes no reconocidas"/><br />
+            @*<img alt="" class="ImageCheckbox" title="Presentes no reconocidas" src="@Url.Content("~/Content/images/estados/est_azul_m.gif")" />*@
+            <input type="checkbox" id="estadosChckBx3" name="estadosChckBx3" data-label="Presentes reconocidas"/>
+            @*<img alt="" class="ImageCheckbox" title="Presentes reconocidas" src="@Url.Content("~/Content/images/estados/est_verde_m.gif")" />*@
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span class="titulo">Descripción</span><br />
+            <input id="txtFiltroDescripcion" class="txtStd txtMediano" type="text" value="" />
+        </td>
+
+        <td>
+            <span class="titulo">Dirección</span><br />
+            <input id="txtFiltroDireccion" type="text" class="txtStd txtMediano" value="" />
+        </td>
+
+        <td>
+            <span class="titulo">Código</span><br />
+            <input id="txtFiltroCodigo" type="text" class="txtStd txtMediano" value="" />
+        </td>
+
+        
     </tr>
 
     <tr>
@@ -84,19 +99,6 @@ Histórico de alarmas - @ViewBag.Linea
         </td>
 
         <td>
-            <span class="titulo">Estados</span><br />
-            <div class="divCol">
-                <input type="checkbox" id="estadosChckBx1" name="estadosChckBx1" checked="checked"/><img alt="" class="ImageCheckbox" title="Ausentes no reconocidas" src="@Url.Content("~/Content/images/estados/est_rojo_m.gif")" />
-            </div>
-            <div class="divCol">
-                <input type="checkbox" id="estadosChckBx2" name="estadosChckBx2"/><img alt="" class="ImageCheckbox" title="Presentes no reconocidas" src="@Url.Content("~/Content/images/estados/est_azul_m.gif")" />
-            </div>
-            <div class="divCol">
-                <input type="checkbox" id="estadosChckBx3" name="estadosChckBx3"/><img alt="" class="ImageCheckbox" title="Presentes reconocidas" src="@Url.Content("~/Content/images/estados/est_verde_m.gif")" />
-            </div>
-        </td>
-
-        <td colspan="2">
             <span class="titulo">Eventos</span><br />
             <input type="checkbox" id="eventosChckBx1" name="eventosChckBx1" data-label="Ver eventos"/>
         </td>
@@ -121,7 +123,7 @@ Histórico de alarmas - @ViewBag.Linea
 
                 <th>TIEMPO ACEPT.</th>
                 <th>TIEMPO RESET</th>
-                <th>TIEMPO CUARENT.</th>
+                <th>TIEMPO CUARE.</th>
 
                 <th>CAUSA</th>
             </tr>
@@ -136,7 +138,7 @@ Histórico de alarmas - @ViewBag.Linea
 </div>
 
 <div id="divHiddens">
-    <input id="hidIdLinea" value="1551001" type="hidden" />
+    <input id="hidIdLinea" value="@ViewBag.idLinea" type="hidden" />
     <input id="hidFiltroDescripcion" type="hidden" />
     <input id="hidFiltroSistema" type="hidden" />
     <input id="hidFiltroNode" type="hidden" />
@@ -149,7 +151,8 @@ Histórico de alarmas - @ViewBag.Linea
     <input id="hidEstadosChckBx3" type="hidden" />
     <input id="hidEventosChckBx1" type="hidden" />
 
-    <input id="hidUrlAlarmInfo" type="hidden" value="@Url.Action("VerAlarmInfo", "Home")" />
+    <input id="hidUrlAlarmInfo" type="hidden" value="@Url.Action("VerAlarmInfo", "Alarm")" />
+    <input id="hidUrlActualizaComboSistema" type="hidden" value="@Url.Action("ActualizaComboSistema", "Alarm")" />
 </div>
 
 <div id="divDialogAlarmInfo" title="Información de alarma" class="dialogGeneral" style="text-align: center;">
@@ -159,98 +162,98 @@ Histórico de alarmas - @ViewBag.Linea
 
 @section Scripts{
 <script src="@Url.Content("~/Scripts/jquery.dataTables/jquery.dataTablesTernium.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/AlarmsHistorical/AlarmsHistorical.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.dataTables/jquery.dataTablesTerniumExt.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/Historical/Alarms.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.datatimepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
 
-        //var today = new Date();
         var date = new Date();
 
-        // modifica funcionamiento de recarga por ajax
-        $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
-            if (sNewSource !== undefined && sNewSource !== null) {
-                oSettings.sAjaxSource = sNewSource;
-            }
+//        // modifica funcionamiento de recarga por ajax
+//        $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
+//            if (sNewSource !== undefined && sNewSource !== null) {
+//                oSettings.sAjaxSource = sNewSource;
+//            }
 
-            // Server-side processing should just call fnDraw
-            if (oSettings.oFeatures.bServerSide) {
-                this.fnDraw();
-                return;
-            }
+//            // Server-side processing should just call fnDraw
+//            if (oSettings.oFeatures.bServerSide) {
+//                this.fnDraw();
+//                return;
+//            }
 
-            this.oApi._fnProcessingDisplay(oSettings, true);
-            var that = this;
-            var iStart = oSettings._iDisplayStart;
-            var aData = [];
+//            this.oApi._fnProcessingDisplay(oSettings, true);
+//            var that = this;
+//            var iStart = oSettings._iDisplayStart;
+//            var aData = [];
 
-            this.oApi._fnServerParams(oSettings, aData);
+//            this.oApi._fnServerParams(oSettings, aData);
 
-            oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function (json) {
-                /* Clear the old information from the table */
-                that.oApi._fnClearTable(oSettings);
+//            oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function (json) {
+//                /* Clear the old information from the table */
+//                that.oApi._fnClearTable(oSettings);
 
-                /* Got the data - add it to the table */
-                var aData = (oSettings.sAjaxDataProp !== "") ?
-            that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
+//                /* Got the data - add it to the table */
+//                var aData = (oSettings.sAjaxDataProp !== "") ?
+//            that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
 
-                for (var i = 0; i < aData.length; i++) {
-                    that.oApi._fnAddData(oSettings, aData[i]);
-                }
+//                for (var i = 0; i < aData.length; i++) {
+//                    that.oApi._fnAddData(oSettings, aData[i]);
+//                }
 
-                oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+//                oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
 
-                that.fnDraw();
+//                that.fnDraw();
 
-                if (bStandingRedraw === true) {
-                    oSettings._iDisplayStart = iStart;
-                    that.oApi._fnCalculateEnd(oSettings);
-                    that.fnDraw(false);
-                }
+//                if (bStandingRedraw === true) {
+//                    oSettings._iDisplayStart = iStart;
+//                    that.oApi._fnCalculateEnd(oSettings);
+//                    that.fnDraw(false);
+//                }
 
-                that.oApi._fnProcessingDisplay(oSettings, false);
+//                that.oApi._fnProcessingDisplay(oSettings, false);
 
-                /* Callback user function - for event handlers etc */
-                if (typeof fnCallback == 'function' && fnCallback !== null) {
-                    fnCallback(oSettings);
-                }
-            }, oSettings);
-        };
+//                /* Callback user function - for event handlers etc */
+//                if (typeof fnCallback == 'function' && fnCallback !== null) {
+//                    fnCallback(oSettings);
+//                }
+//            }, oSettings);
+//        };
 
-        // cambia el funcionamiento de la búsqueda rápida para que tenga delay
-        $.fn.dataTableExt.oApi.fnSetFilteringDelay = function (oSettings, iDelay) {
-            var _that = this;
+//        // cambia el funcionamiento de la búsqueda rápida para que tenga delay
+//        $.fn.dataTableExt.oApi.fnSetFilteringDelay = function (oSettings, iDelay) {
+//            var _that = this;
 
-            if (iDelay === undefined) {
-                iDelay = 250;
-            }
+//            if (iDelay === undefined) {
+//                iDelay = 250;
+//            }
 
-            this.each(function (i) {
-                $.fn.dataTableExt.iApiIndex = i;
-                var 
-                    $this = this,
-                    oTimerId = null,
-                    sPreviousSearch = null,
-                    anControl = $('input', _that.fnSettings().aanFeatures.f);
+//            this.each(function (i) {
+//                $.fn.dataTableExt.iApiIndex = i;
+//                var 
+//                    $this = this,
+//                    oTimerId = null,
+//                    sPreviousSearch = null,
+//                    anControl = $('input', _that.fnSettings().aanFeatures.f);
 
-                anControl.unbind('keyup').bind('keyup', function () {
-                    var $$this = $this;
+//                anControl.unbind('keyup').bind('keyup', function () {
+//                    var $$this = $this;
 
-                    if (sPreviousSearch === null || sPreviousSearch != anControl.val()) {
-                        window.clearTimeout(oTimerId);
-                        sPreviousSearch = anControl.val();
-                        oTimerId = window.setTimeout(function () {
-                            $.fn.dataTableExt.iApiIndex = i;
-                            _that.fnFilter(anControl.val());
-                        }, iDelay);
-                    }
-                });
+//                    if (sPreviousSearch === null || sPreviousSearch != anControl.val()) {
+//                        window.clearTimeout(oTimerId);
+//                        sPreviousSearch = anControl.val();
+//                        oTimerId = window.setTimeout(function () {
+//                            $.fn.dataTableExt.iApiIndex = i;
+//                            _that.fnFilter(anControl.val());
+//                        }, iDelay);
+//                    }
+//                });
 
-                return this;
-            });
-            return this;
-        };
+//                return this;
+//            });
+//            return this;
+//        };
 
         // solo lectura para los selectores de fecha
         $('#txtFiltroDiaInicio').attr('readonly', true);
@@ -312,7 +315,7 @@ Histórico de alarmas - @ViewBag.Linea
         $('#historical').dataTable({
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": '@Url.Action("List", "Home")',
+            "sAjaxSource": '@Url.Action("List", "Alarm")',
             "bJQueryUI": false,
             "iDelay": 300,
             "bDeferRender": true,
@@ -322,22 +325,23 @@ Histórico de alarmas - @ViewBag.Linea
             "bLengthChange": false,
             "aaSorting": [[2, 'desc']],
             "aoColumns": [
-                { "bSearchable": false, "sWidth": "5%" },
-                { "sWidth": "25%" },
-                { "sWidth": "14%" },
-                { "sWidth": "14%" },
-                { "sWidth": "14%" },
-                { "sWidth": "14%" },
-                { "sWidth": "14%" },
-                { "bSearchable": false, "bVisible": false },
-                { "bSearchable": false, "bVisible": false },
-                { "bSearchable": false, "bVisible": false },
-                { "bSearchable": false, "bVisible": false }
+                { "bSearchable": false, "sWidth": "5%", "sName": "estado" },
+                { "sWidth": "25%", "sName": "description" },
+                { "sWidth": "13%", "sName": "timeOn" },
+                { "sWidth": "13%", "sName": "timeOff" },
+                { "sWidth": "13%", "sName": "timeAcknowledge" },
+                { "sWidth": "13%", "sName": "timeReset" },
+                { "sWidth": "13%", "sName": "timeQuarantine" },
+                { "sWidth": "5%", "sName": "event" },
+                { "bSearchable": false, "bVisible": false, "sName": "eventDescription" },
+                { "bSearchable": false, "bVisible": false, "sName": "node" },
+                { "bSearchable": false, "bVisible": false, "sName": "timeStampOn" },
+                { "bSearchable": false, "bVisible": false, "sName": "idAlarm" }
             ],
-            "aoColumnDefs": [
-                { "bSearchable": false, "aTargets": [8] },
-                { "bVisible": false, "aTargets": [8] }
-            ],
+//            "aoColumnDefs": [
+//                { "bSearchable": false, "aTargets": [8] },
+//                { "bVisible": false, "aTargets": [8] }
+//            ],
             "oLanguage": {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -394,7 +398,7 @@ Histórico de alarmas - @ViewBag.Linea
                             delay: 250
                         },
                         hide: {
-                            effect: "explode",
+                            effect: "slideDown",
                             delay: 250
                         },
                         position: {
@@ -478,9 +482,19 @@ Histórico de alarmas - @ViewBag.Linea
             show: "slow"
         });
 
+        $(".estadoTooltip").tooltip({
+            
+            content: function (callback) {
+                $.get("@Url.Action("TooltipEstados", "Alarm")", {}, function (data) {
+                    callback(data); //call the callback function to return the value
+                });
+            }
+
+        });
+
         // implementa autocomplete para descripción
         //$("#txtFiltroDireccion").autocomplete({
-        //    source: "@Url.Action("DireccionAutocomplete", "Home")"
+        //    source: "@Url.Action("DireccionAutocomplete", "Alarm")"
         //});
     });
 </script>

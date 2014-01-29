@@ -9,6 +9,22 @@
         <Function Name="getLines" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="lineId" Type="int" Mode="In" />
         </Function>
+        <Function Name="usp_web_get_alarm_status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_web_get_commands_historical" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+          <Parameter Name="id_sistema" Type="int" Mode="In" />
+          <Parameter Name="id_node" Type="varchar" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
+          <Parameter Name="address" Type="varchar" Mode="In" />
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="fechaInicio" Type="datetime" Mode="In" />
+          <Parameter Name="fechaFin" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_web_get_lines" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id_line" Type="int" Mode="In" />
+        </Function>
         <Function Name="usp_web_llenar_combo_nodos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id_line" Type="int" Mode="In" />
         </Function>
@@ -32,7 +48,7 @@
           <Parameter Name="id_node" Type="varchar" Mode="In" />
           <Parameter Name="description" Type="varchar" Mode="In" />
           <Parameter Name="address" Type="varchar" Mode="In" />
-          <Parameter Name="codigo" Type="int" Mode="In" />
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
           <Parameter Name="fechaInicio" Type="datetime" Mode="In" />
           <Parameter Name="fechaFin" Type="datetime" Mode="In" />
           <Parameter Name="view_events" Type="bit" Mode="In" />
@@ -84,13 +100,22 @@
             <Parameter Name="id_alarm" Mode="In" Type="Int32" />
             <Parameter Name="time_on" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="get_alarm_group_tree" ReturnType="Collection(DATOS_SCADAModel.get_alarm_group_tree_Result)">
+            <Parameter Name="id_line" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_alarm_status" ReturnType="Collection(DATOS_SCADAModel.get_alarm_status_Result)">
+          <Parameter Name="id_line" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_lines" ReturnType="Collection(DATOS_SCADAModel.get_lines_Result)">
+          <Parameter Name="id_line" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="obtener_historico_alarmas" ReturnType="Collection(DATOS_SCADAModel.obtener_historico_alarmas_Result)">
             <Parameter Name="id_line" Mode="In" Type="Int32" />
             <Parameter Name="id_sistema" Mode="In" Type="Int32" />
             <Parameter Name="id_node" Mode="In" Type="String" />
             <Parameter Name="description" Mode="In" Type="String" />
             <Parameter Name="address" Mode="In" Type="String" />
-            <Parameter Name="codigo" Mode="In" Type="Int32" />
+            <Parameter Name="codigo" Mode="In" Type="String" />
             <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
             <Parameter Name="view_events" Mode="In" Type="Boolean" />
@@ -98,11 +123,15 @@
             <Parameter Name="view_prerec" Mode="In" Type="Boolean" />
             <Parameter Name="view_ausnorec" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="get_alarm_group_tree" ReturnType="Collection(DATOS_SCADAModel.get_alarm_group_tree_Result)">
+          <FunctionImport Name="get_commands_historical" ReturnType="Collection(DATOS_SCADAModel.get_commands_historical_Result)">
             <Parameter Name="id_line" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="getLines" ReturnType="Collection(DATOS_SCADAModel.getLines_Result)">
-            <Parameter Name="lineId" Mode="In" Type="Int32" />
+            <Parameter Name="id_sistema" Mode="In" Type="Int32" />
+            <Parameter Name="id_node" Mode="In" Type="String" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="codigo" Mode="In" Type="String" />
+            <Parameter Name="fechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="fechaFin" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="llenar_combo_sistemas_Result">
@@ -158,7 +187,24 @@
         <ComplexType Name="get_alarm_group_tree_Result">
           <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
         </ComplexType>
-        <ComplexType Name="getLines_Result">
+        <ComplexType Name="get_alarm_status_Result" >
+          <Property Type="Int32" Name="idStatus" Nullable="false" />
+          <Property Type="String" Name="status" Nullable="false" />
+          <Property Type="String" Name="icon" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_commands_historical_Result">
+          <Property Type="String" Name="description" Nullable="false" />
+          <Property Type="String" Name="arriveTime" Nullable="false" />
+          <Property Type="String" Name="sendTime" Nullable="false" />
+          <Property Type="Int64" Name="sendTimeStamp" Nullable="false" />
+          <Property Type="Int32" Name="idCommand" Nullable="false" />
+          <Property Type="String" Name="system" Nullable="false" />
+          <Property Type="String" Name="application" Nullable="false" />
+          <Property Type="String" Name="user" Nullable="false" />
+          <Property Type="Double" Name="value" Nullable="false" />
+          <Property Type="String" Name="address" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_lines_Result">
           <Property Type="Int32" Name="id_line" Nullable="false" />
           <Property Type="String" Name="line" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="ip" Nullable="false" MaxLength="15" />
@@ -232,6 +278,26 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_alarm_status" FunctionName="DATOS_SCADAModel.Store.usp_web_get_alarm_status">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.get_alarm_status_Result">
+                <ScalarProperty Name="idStatus" ColumnName="idStatus" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_lines" FunctionName="DATOS_SCADAModel.Store.usp_web_get_lines">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.get_lines_Result">
+                <ScalarProperty Name="id_line" ColumnName="id_line" />
+                <ScalarProperty Name="line" ColumnName="line" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="port" ColumnName="port" />
+                <ScalarProperty Name="version" ColumnName="version" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="obtener_historico_alarmas" FunctionName="DATOS_SCADAModel.Store.usp_web_obtener_historico_alarmas">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DATOS_SCADAModel.obtener_historico_alarmas_Result">
@@ -250,14 +316,19 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getLines" FunctionName="DATOS_SCADAModel.Store.getLines">
+          <FunctionImportMapping FunctionImportName="get_commands_historical" FunctionName="DATOS_SCADAModel.Store.usp_web_get_commands_historical">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DATOS_SCADAModel.getLines_Result">
-                <ScalarProperty Name="id_line" ColumnName="id_line" />
-                <ScalarProperty Name="line" ColumnName="line" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
-                <ScalarProperty Name="port" ColumnName="port" />
-                <ScalarProperty Name="version" ColumnName="version" />
+              <ComplexTypeMapping TypeName="DATOS_SCADAModel.get_commands_historical_Result">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="arriveTime" ColumnName="arriveTime" />
+                <ScalarProperty Name="sendTime" ColumnName="sendTime" />
+                <ScalarProperty Name="sendTimeStamp" ColumnName="sendTimeStamp" />
+                <ScalarProperty Name="idCommand" ColumnName="idCommand" />
+                <ScalarProperty Name="system" ColumnName="system" />
+                <ScalarProperty Name="application" ColumnName="application" />
+                <ScalarProperty Name="user" ColumnName="user" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="address" ColumnName="address" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

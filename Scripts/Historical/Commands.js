@@ -1,8 +1,8 @@
 ﻿/*
-Nombre:         AlarmHistorical.js
-Fecha:          29/10/2013
+Nombre:         Commands.js
+Fecha:          27/01/2014
 Autor:          Fabricio salinas
-Proposito:      Utilerías comunes para histórico de alarmas y comandos
+Proposito:      Utilerías comunes para histórico de comandos
 */
 
 function ActualizaFechasDatapicker() {
@@ -42,7 +42,7 @@ function ActualizaFechasDatapicker() {
 
 }
 
-function FiltrarHistoricoAlarmas() {
+function FiltrarHistoricoComandos() {
     // actualiza filtros
     ActualizaFiltroContainers();
 
@@ -66,18 +66,13 @@ function ActualizaFiltroContainers() {
     else {
         $("#hidFiltroCodigo").val($("#txtFiltroCodigo").val());
     }
-    
-    $("#hidEventosChckBx1").val($("#eventosChckBx1:checked").val());
-    $("#hidEstadosChckBx1").val($("#estadosChckBx1:checked").val());
-    $("#hidEstadosChckBx2").val($("#estadosChckBx2:checked").val());
-    $("#hidEstadosChckBx3").val($("#estadosChckBx3:checked").val());
 }
 
 function dataTableRezize() {
     $('.dataTables_scrollBody').css('height', $('.content-main').height() - ($('.dataTables_filter').height() * 2) - $('.dataTables_info').height() - $('.dataTables_scrollHead').height());
 }
 
-function VerAlarmInfo(idAlarm, timeOn) {
+function VerCommandInfo(idCommand, timeOn) {
     var params;
     var url = $("#hidUrlAlarmInfo").val();
     var idLinea = $("#hidIdLinea").val();
@@ -85,62 +80,56 @@ function VerAlarmInfo(idAlarm, timeOn) {
     // define parámetros (json)
     params = {
         "idLinea": idLinea,
-        "idAlarm": idAlarm,
+        "idCommand": idCommand,
         "timeOn": timeOn
     };
 
     // carga partial view en el diálogo
-    CallBacks.loadPartialView(url, "POST", VerAlarmInfoDialog, params);
+    CallBacks.loadPartialView(url, "POST", VerCommandInfoDialog, params);
 }
 
-function VerAlarmInfoDialog(data) {
+function VerCommandInfoDialog(data) {
     // llena el div con el contenido devuelto por el partial view
-    $("#divDialogAlarmInfo").html(data);
+    $("#divDialogCommandInfo").html(data);
 
     // muestra el diálogo
-    $("#divDialogAlarmInfo").dialog('open');
+    $("#divDialogCommandInfo").dialog('open');
 }
 
-//function ActualizaComboGrupo() {
-//    var params;
-//    var url = $("#hidUrlActualizaComboGrupo").val();
-//    var idLinea = $("#hidIdLinea").val();
-//    var idConjunto = $("#ddlFiltroConjunto").val();
+function ActualizaComboSistema() {
+    var params;
+    var url = $("#hidUrlActualizaComboSistema").val();
+    var idLinea = $("#ddlFiltroLinea").val();
 
-//    // validaciones
-//    if ("index" == idConjunto) {
-//        idConjunto = -1;
-//    }
+    params = {
+        "idLinea": idLinea
+    };
 
-//    params = {
-//        "idLinea": idLinea,
-//        "idConjunto": idConjunto
-//    };
+    // llama al aacción que devolverá resultados para el combo
+    CallBacks.loadJsonView(url, "POST", ActualizaComboSistemaFill, params);
+}
 
-//    // llama al aacción que devolverá resultados para el combo
-//    CallBacks.loadJsonView(url, "POST", ActualizaComboGrupoFill, params);
-//}
+function ActualizaComboSistemaFill(jsonvalue) {
+    var combo = $("#ddlFiltroSistema").msDropDown().data("dd");
 
-//function ActualizaComboGrupoFill(jsonvalue) {
-//    var combo = $("#ddlFiltroGrupoRodillo").msDropDown().data("dd");
+    // destruye combo
+    combo.destroy();
 
-//    // destruye combo
-//    combo.destroy();
+    // vacía drop down
+    $("#ddlFiltroSistema").empty();
 
-//    // vacía drop down
-//    $("#ddlFiltroGrupoRodillo").empty();
+    // agrega option "Seleccionar"
+    combo.add(new Option("Todos", "-1"));
 
-//    // agrega option "Seleccionar"
-//    combo.add(new Option("[Seleccionar]", "index"));
+    // agregar los option obtenidos
+    $.each(jsonvalue, function (i, data) {
+        var desc = data.description;
+        var id = data.idPlc;
 
-//    // agregar los option obtenidos
-//    $.each(jsonvalue, function (i, data) {
-//        var desc = data.grupo;
-//        var id = data.id_grupo;
+        combo.add(new Option(desc.toString(), id.toString()));
+    });
 
-//        combo.add(new Option(desc.toString(), id.toString()));
-//    });
+    // actualiza el nombre de la línea
+    $("#lblLinea").text($("#ddlFiltroLinea option:selected").text());
+}
 
-//    // indica que el select es un msDropDown
-//    $("#ddlFiltroGrupoRodillo").msDropDown();
-//}

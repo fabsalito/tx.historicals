@@ -1,0 +1,28 @@
+﻿@model sga.ViewModels.InfoAlarmasViewModel
+           
+@{
+    Layout = null;
+}
+
+<table class="TerniumTable">
+    <thead>
+        <tr>
+            <th>Estado</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+
+    <tbody >
+        @{
+            foreach (var item in @Model.estados)
+            {
+                <tr>
+                    <td>
+                        <img alt="@item.status" src="@Url.Content("~/Content/images/estados/" + @item.icon)" border="0" />
+                    </td>
+                    <td>@item.status</td>
+                </tr>            
+            }
+        }
+    </tbody>
+</table>
