@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+
+@{
+    if (@ViewBag.outside)
+    {
+        // incluir HTML completo y estilos
+        <html>
+
+    }
+}
+        <table id="tbHistorical">
+            <thead>
+                <tr>
+                    <th>EST.</th>
+                    <th>[CODIGO] DESCRIPCIÓN</th>
+                    <th>TIEMPO ON</th>
+                    <th>TIEMPO OFF</th>
+
+                    <th>TIEMPO ACEPT.</th>
+                    <th>TIEMPO RESET</th>
+                    <th>TIEMPO CUARE.</th>
+
+                    <th>CAUSA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="8" ></td>
+                </tr>
+            </tbody>
+        </table>
+
+@{
+    if (ViewBag.outside){
+        // incluir scripts de pagina completa
+        <script src="@Url.Content("~/Scripts/jquery.dataTables/jquery.dataTablesTernium.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.dataTables/jquery.dataTablesTerniumExt.js")" type="text/javascript"></script>
+    </body>
+</html>
+    }
+    else
+    {
+        // incluir scripts en sección correspondiente
+        @section Scripts{
+            <script src="@Url.Content("~/Scripts/jquery.dataTables/jquery.dataTablesTernium.js")" type="text/javascript"></script>
+            <script src="@Url.Content("~/Scripts/jquery.dataTables/jquery.dataTablesTerniumExt.js")" type="text/javascript"></script>
+        }
+    }
+}
