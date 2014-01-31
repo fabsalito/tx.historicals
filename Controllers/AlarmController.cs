@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataTables;
 using sga.ViewModels;
+using sga.Filters;
 
 namespace sga.Controllers
 {
@@ -73,6 +74,27 @@ namespace sga.Controllers
             }
 
 
+        }
+
+        public ActionResult Alarmas(callParameterAlarmsGrid inFilters)
+        {
+            // obtiene valores recibidos
+            ViewBag.idLinea = inFilters.idLinea;
+            ViewBag.description = inFilters.description;
+            ViewBag.address = inFilters.address;
+            ViewBag.system = inFilters.system;
+            ViewBag.node = inFilters.node;
+            ViewBag.inicio = inFilters.inicio;
+            ViewBag.fin = inFilters.fin;
+            ViewBag.code = inFilters.code;
+            ViewBag.showEvents = inFilters.showEvents;
+            ViewBag.showAusNoRec = inFilters.showAusNoRec;
+            ViewBag.showPreNoRec = inFilters.showPreNoRec;
+            ViewBag.showPreRec = inFilters.showPreRec;
+            ViewBag.outside = inFilters.outside;
+            ViewBag.iDisplayLength = inFilters.iDisplayLength;
+
+            return View();
         }
 
         public JsonResult List()
@@ -205,7 +227,10 @@ namespace sga.Controllers
                         showAusNoRec).ToList();
 
                     // guarda en sesión
-                    Session["alarmas"] = alarmasEnum;
+                    if (alarmasEnum.Count() > 0)
+                    {
+                        Session["alarmas"] = alarmasEnum;
+                    }
                 }
                 else
                 {

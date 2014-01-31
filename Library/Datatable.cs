@@ -117,7 +117,7 @@ namespace DataTables
             // parse the paging values
             int skip = 0, take = 25;
             int.TryParse(_httpRequest[DISPLAY_START], out skip);
-            //int.TryParse(_httpRequest[DISPLAY_LENGTH], out take);
+            int.TryParse(_httpRequest[DISPLAY_LENGTH], out take);
 
             // setup the data with individual property search, all fields search,
             // paging, and property list selection

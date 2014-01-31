@@ -138,3 +138,23 @@ function ActualizaComboSistemaFill(jsonvalue) {
     $("#lblLinea").text($("#ddlFiltroLinea option:selected").text());
 }
 
+function VerAlarms() {
+        var params;
+        var url = $("#hidUrlAlarmInfoGrid").val();
+        var idLinea = $("#hidIdLineaGrid").val();
+
+        // define parámetros (json)
+        params = {
+            "idLinea": idLinea,
+            "idAlarm": idAlarm,
+            "timeOn": timeOn
+        };
+
+        // carga partial view en el diálogo
+        CallBacks.loadPartialView(url, "POST", VerAlarmsGrid, params);
+    }
+
+    function VerAlarmsGrid(data) {
+        // llena el div con el contenido devuelto por el partial view
+        $("#divDialogAlarmInfo").html(data);
+    }

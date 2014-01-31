@@ -151,13 +151,11 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
     <input id="hidEstadosChckBx3" type="hidden" />
     <input id="hidEventosChckBx1" type="hidden" />
 
-    <input id="hidUrlAlarmInfo" type="hidden" value="@Url.Action("VerAlarmInfo", "Alarm")" />
+    
     <input id="hidUrlActualizaComboSistema" type="hidden" value="@Url.Action("ActualizaComboSistema", "Alarm")" />
 </div>
 
-<div id="divDialogAlarmInfo" title="Información de alarma" class="dialogGeneral" style="text-align: center;">
 
-</div>
 }
 
 @section Scripts{
@@ -170,90 +168,6 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
     $(document).ready(function () {
 
         var date = new Date();
-
-//        // modifica funcionamiento de recarga por ajax
-//        $.fn.dataTableExt.oApi.fnReloadAjax = function (oSettings, sNewSource, fnCallback, bStandingRedraw) {
-//            if (sNewSource !== undefined && sNewSource !== null) {
-//                oSettings.sAjaxSource = sNewSource;
-//            }
-
-//            // Server-side processing should just call fnDraw
-//            if (oSettings.oFeatures.bServerSide) {
-//                this.fnDraw();
-//                return;
-//            }
-
-//            this.oApi._fnProcessingDisplay(oSettings, true);
-//            var that = this;
-//            var iStart = oSettings._iDisplayStart;
-//            var aData = [];
-
-//            this.oApi._fnServerParams(oSettings, aData);
-
-//            oSettings.fnServerData.call(oSettings.oInstance, oSettings.sAjaxSource, aData, function (json) {
-//                /* Clear the old information from the table */
-//                that.oApi._fnClearTable(oSettings);
-
-//                /* Got the data - add it to the table */
-//                var aData = (oSettings.sAjaxDataProp !== "") ?
-//            that.oApi._fnGetObjectDataFn(oSettings.sAjaxDataProp)(json) : json;
-
-//                for (var i = 0; i < aData.length; i++) {
-//                    that.oApi._fnAddData(oSettings, aData[i]);
-//                }
-
-//                oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
-
-//                that.fnDraw();
-
-//                if (bStandingRedraw === true) {
-//                    oSettings._iDisplayStart = iStart;
-//                    that.oApi._fnCalculateEnd(oSettings);
-//                    that.fnDraw(false);
-//                }
-
-//                that.oApi._fnProcessingDisplay(oSettings, false);
-
-//                /* Callback user function - for event handlers etc */
-//                if (typeof fnCallback == 'function' && fnCallback !== null) {
-//                    fnCallback(oSettings);
-//                }
-//            }, oSettings);
-//        };
-
-//        // cambia el funcionamiento de la búsqueda rápida para que tenga delay
-//        $.fn.dataTableExt.oApi.fnSetFilteringDelay = function (oSettings, iDelay) {
-//            var _that = this;
-
-//            if (iDelay === undefined) {
-//                iDelay = 250;
-//            }
-
-//            this.each(function (i) {
-//                $.fn.dataTableExt.iApiIndex = i;
-//                var 
-//                    $this = this,
-//                    oTimerId = null,
-//                    sPreviousSearch = null,
-//                    anControl = $('input', _that.fnSettings().aanFeatures.f);
-
-//                anControl.unbind('keyup').bind('keyup', function () {
-//                    var $$this = $this;
-
-//                    if (sPreviousSearch === null || sPreviousSearch != anControl.val()) {
-//                        window.clearTimeout(oTimerId);
-//                        sPreviousSearch = anControl.val();
-//                        oTimerId = window.setTimeout(function () {
-//                            $.fn.dataTableExt.iApiIndex = i;
-//                            _that.fnFilter(anControl.val());
-//                        }, iDelay);
-//                    }
-//                });
-
-//                return this;
-//            });
-//            return this;
-//        };
 
         // solo lectura para los selectores de fecha
         $('#txtFiltroDiaInicio').attr('readonly', true);
@@ -311,135 +225,6 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
         // actualiza filtros
         ActualizaFiltroContainers();
 
-        // implementa dataTable
-        $('#historical').dataTable({
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": '@Url.Action("List", "Alarm")',
-            "bJQueryUI": false,
-            "iDelay": 300,
-            "bDeferRender": true,
-            "bScrollInfinite": true,
-            "bScrollCollapse": true,
-            "iDisplayLength": 25,
-            "bLengthChange": false,
-            "aaSorting": [[2, 'desc']],
-            "aoColumns": [
-                { "bSearchable": false, "sWidth": "5%", "sName": "estado" },
-                { "sWidth": "25%", "sName": "description" },
-                { "sWidth": "13%", "sName": "timeOn" },
-                { "sWidth": "13%", "sName": "timeOff" },
-                { "sWidth": "13%", "sName": "timeAcknowledge" },
-                { "sWidth": "13%", "sName": "timeReset" },
-                { "sWidth": "13%", "sName": "timeQuarantine" },
-                { "sWidth": "5%", "sName": "event" },
-                { "bSearchable": false, "bVisible": false, "sName": "eventDescription" },
-                { "bSearchable": false, "bVisible": false, "sName": "node" },
-                { "bSearchable": false, "bVisible": false, "sName": "timeStampOn" },
-                { "bSearchable": false, "bVisible": false, "sName": "idAlarm" }
-            ],
-//            "aoColumnDefs": [
-//                { "bSearchable": false, "aTargets": [8] },
-//                { "bVisible": false, "aTargets": [8] }
-//            ],
-            "oLanguage": {
-                "sProcessing": "Procesando...",
-                "sLengthMenu": "Mostrar _MENU_ registros",
-                "sZeroRecords": "No se encontraron resultados",
-                "sEmptyTable": "Ningún dato disponible en esta tabla",
-                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sSearch": "Buscar",
-                "sUrl": "",
-                "sInfoThousands": ",",
-                "sLoadingRecords": "Cargando...",
-                "oPaginate": {
-                    "sFirst": "Primero",
-                    "sLast": "Último",
-                    "sNext": "Siguiente",
-                    "sPrevious": "Anterior"
-                },
-                "oAria": {
-                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                }
-            },
-            "fnServerParams": function (aoData) {
-                aoData.push({ "name": "cusIdLinea", "value": $("#hidIdLinea").val() },
-                            { "name": "cusDescription", "value": $("#hidFiltroDescripcion").val() },
-                            { "name": "cusDireccion", "value": $("#hidFiltroDireccion").val() },
-                            { "name": "cusSistema", "value": $("#hidFiltroSistema").val() },
-                            { "name": "cusNode", "value": $("#hidFiltroNode").val() },
-                            { "name": "cusInicio", "value": $("#hidFiltroDiaInicio").val() },
-                            { "name": "cusFin", "value": $("#hidFiltroDiaFin").val() },
-                            { "name": "cusCodigo", "value": $("#hidFiltroCodigo").val() },
-                            { "name": "cusShowEvents", "value": $("#hidEventosChckBx1").val() },
-                            { "name": "cusShowAusNoRec", "value": $("#hidEstadosChckBx1").val() },
-                            { "name": "cusShowPreNoRec", "value": $("#hidEstadosChckBx2").val() },
-                            { "name": "cusShowPreRec", "value": $("#hidEstadosChckBx3").val() });
-            },
-            "sScrollY": $('.content-header').height(),
-            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                // verifica si tiene que recortar texto y aplicar tooltip
-                if ($('td:eq(1)', nRow).text().length > 35) {
-                    // define title para tooltip
-                    $('td:eq(1)', nRow).attr('title', '<b>Descripción: </b></br>' + aData[1] + '</br></br><b>Causa: </b></br>' + aData[8]);
-                    $('td:eq(1)', nRow).attr('class', 'Tooltip');
-
-                    // recorta el texto
-                    $('td:eq(1)', nRow).text($('td:eq(1)', nRow).text().substr(0, 35) + '...');
-
-                    // define tooltip para la fila
-                    $('td:eq(1)', nRow).tooltip({
-                        show: {
-                            effect: "slideDown",
-                            delay: 250
-                        },
-                        hide: {
-                            effect: "slideDown",
-                            delay: 250
-                        },
-                        position: {
-                            my: "left-50 center",
-                            at: "right center"
-                        }
-                    });
-                }
-
-                // imagen para ausentes no reconocidas
-                if ("" != aData[2] && "" != aData[3] && "" == aData[4]) {
-                    $('td:eq(0)', nRow).html('<img style="cursor: pointer;" src="@Url.Content("~/Content/images/estados/est_rojo_m.gif")" />');
-                }
-
-                // imagen para presentes no reconocidas
-                if ("" != aData[2] && "" == aData[3] && "" == aData[4]) {
-                    $('td:eq(0)', nRow).html('<img style="cursor: pointer;" src="@Url.Content("~/Content/images/estados/est_azul_m.gif")" />');
-                }
-
-                // imagen para persentes reconocidas
-                if ("" != aData[2] && "" == aData[3] && "" != aData[4]) {
-                    $('td:eq(0)', nRow).html('<img style="cursor: pointer;" src="@Url.Content("~/Content/images/estados/est_verde_m.gif")" />');
-                }
-
-                //console.log(aData[1]);
-                //console.log(aData[10]);
-                //console.log(aData[11]);
-
-                // asigna llamada al diálogo
-                $('td:eq(0)', nRow).on('click', function () {
-                    VerAlarmInfo(aData[11], aData[2]);
-                });
-            },
-            "fnDrawCallback": function (oSettings) {
-                dataTableRezize();
-            }
-        });
-
-        // aplica mejoras en la respuesta del filtro rapido
-        $('#historical').dataTable().fnSetFilteringDelay();
-
         // aplica switch on-off al checkbox de eventos
         $('#eventosChckBx1').prettyCheckable({
             color: "gray"
@@ -472,16 +257,6 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
             }
         });
 
-        // define dialogo para info de alarma
-        $("#divDialogAlarmInfo").dialog({
-            autoOpen: false,
-            width: "50%",
-            modal: true,
-            height: "auto",
-            resizable: false,
-            show: "slow"
-        });
-
         $(".estadoTooltip").tooltip({
             
             content: function (callback) {
@@ -492,10 +267,7 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
 
         });
 
-        // implementa autocomplete para descripción
-        //$("#txtFiltroDireccion").autocomplete({
-        //    source: "@Url.Action("DireccionAutocomplete", "Alarm")"
-        //});
+
     });
 </script>
 }
