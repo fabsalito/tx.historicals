@@ -112,28 +112,12 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
 
 @section Content{
 
-<div>
-    <table id="historical">
-        <thead>
-            <tr>
-                <th>EST.</th>
-                <th>[CODIGO] DESCRIPCIÓN</th>
-                <th>TIEMPO ON</th>
-                <th>TIEMPO OFF</th>
+<div id="divHistorical">
 
-                <th>TIEMPO ACEPT.</th>
-                <th>TIEMPO RESET</th>
-                <th>TIEMPO CUARE.</th>
 
-                <th>CAUSA</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-			    <td colspan="7" ></td>
-		    </tr>
-        </tbody>
-    </table>
+</div>
+
+<div id="divDialogAlarmInfo" title="Información de alarma" class="dialogGeneral" style="text-align: center;">
 
 </div>
 
@@ -150,9 +134,9 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
     <input id="hidEstadosChckBx2" type="hidden" />
     <input id="hidEstadosChckBx3" type="hidden" />
     <input id="hidEventosChckBx1" type="hidden" />
-
-    
     <input id="hidUrlActualizaComboSistema" type="hidden" value="@Url.Action("ActualizaComboSistema", "Alarm")" />
+    <input id="hidUrlAlarmas" type="hidden" value="@Url.Action("Alarmas", "Alarm")" />
+    <input id="hidUrlAlarmInfo" type="hidden" value="@Url.Action("VerAlarmInfo", "Alarm")" />
 </div>
 
 
@@ -165,7 +149,10 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
 <script src="@Url.Content("~/Scripts/jquery.datatimepicker/jquery-ui-timepicker-addon.js")" type="text/javascript"></script>
 
 <script type="text/javascript">
+    var dialogAlarmInfo;
+    
     $(document).ready(function () {
+        console.log("ready1!");
 
         var date = new Date();
 
@@ -241,21 +228,21 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
             color: "gray"
         });
 
-        // implementa plugin tooltip
-        $('.ImageCheckbox').tooltip({
-            show: {
-                effect: "slideDown",
-                delay: 250
-            },
-            hide: {
-                effect: "explode",
-                delay: 250
-            },
-            position: {
-                my: "left-50 bottom+20",
-                at: "right bottom+20"
-            }
-        });
+        // // implementa plugin tooltip
+        // $('.ImageCheckbox').tooltip({
+        //     show: {
+        //         effect: "slideDown",
+        //         delay: 250
+        //     },
+        //     hide: {
+        //         effect: "slideDown",
+        //         delay: 250
+        //     },
+        //     position: {
+        //         my: "left-50 bottom+20",
+        //         at: "right bottom+20"
+        //     }
+        // });
 
         $(".estadoTooltip").tooltip({
             
@@ -267,7 +254,8 @@ Histórico de alarmas - <label id="lblLinea">@ViewBag.linea</label>
 
         });
 
-
+        // muestra alarmas
+        VerAlarms();
     });
 </script>
 }

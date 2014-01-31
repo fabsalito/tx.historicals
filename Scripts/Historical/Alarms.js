@@ -47,7 +47,8 @@ function FiltrarHistoricoAlarmas() {
     ActualizaFiltroContainers();
 
     // actualiza grilla
-    $("#historical").dataTable().fnReloadAjax();
+    //$("#tbHistorical").dataTable().fnReloadAjax();
+    VerAlarms();
 }
 
 function ActualizaFiltroContainers() {
@@ -61,7 +62,7 @@ function ActualizaFiltroContainers() {
     $("#hidIdLinea").val($("#ddlFiltroLinea").val());
 
     if ('' == $("#txtFiltroCodigo").val()) {
-        $("#hidFiltroCodigo").val('-1');5
+        $("#hidFiltroCodigo").val('-1');
     }
     else {
         $("#hidFiltroCodigo").val($("#txtFiltroCodigo").val());
@@ -139,22 +140,46 @@ function ActualizaComboSistemaFill(jsonvalue) {
 }
 
 function VerAlarms() {
-        var params;
-        var url = $("#hidUrlAlarmInfoGrid").val();
-        var idLinea = $("#hidIdLineaGrid").val();
+    var params;
+    var url = $("#hidUrlAlarmas").val();
+    var idLinea = $("#hidIdLinea").val();
+    var description = $("#hidFiltroDescripcion").val();
+    var system = $("#hidFiltroSistema").val();
+    var node = $("#hidFiltroNode").val();
+    var address = $("#hidFiltroDireccion").val();
+    var code = $("#hidFiltroCodigo").val();
+    var inicio = $("#hidFiltroDiaInicio").val();
+    var fin = $("#hidFiltroDiaFin").val();
+    var showEvents = $("#hidEventosChckBx1").val();
+    var showAusNoRec = $("#hidEstadosChckBx1").val();
+    var showPreNoRec = $("#hidEstadosChckBx2").val();
+    var showPreRec = $("#hidEstadosChckBx3").val();
+    var outside = false;
+    var iDisplayLength = 25;
 
-        // define parámetros (json)
-        params = {
-            "idLinea": idLinea,
-            "idAlarm": idAlarm,
-            "timeOn": timeOn
-        };
+    // define parámetros (json)
+    params = {
+        "idLinea": idLinea,
+        "description": description,
+        "system": system,
+        "node": node,
+        "address": address,
+        "code": code,
+        "inicio": inicio,
+        "fin": fin,
+        "showEvents": showEvents,
+        "showAusNoRec": showAusNoRec,
+        "showPreNoRec": showPreNoRec,
+        "showPreRec": showPreRec,
+        "outside": outside,
+        "iDisplayLength": iDisplayLength
+    };
 
-        // carga partial view en el diálogo
-        CallBacks.loadPartialView(url, "POST", VerAlarmsGrid, params);
-    }
+    // carga partial view en el diálogo
+    CallBacks.loadPartialView(url, "POST", VerAlarmsGrid, params);
+}
 
-    function VerAlarmsGrid(data) {
-        // llena el div con el contenido devuelto por el partial view
-        $("#divDialogAlarmInfo").html(data);
-    }
+function VerAlarmsGrid(data) {
+    // llena el div con el contenido devuelto por el partial view
+    $("#divHistorical").html(data);
+}
